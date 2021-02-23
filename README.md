@@ -1,24 +1,14 @@
-# README
+# Backend: Final Capstone Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is about Final Capstone Project based on a find your house app. The content of this project was personalized. Through this APP you can search on line products.
 
-Things you may want to cover:
+##Built With
 
-* Ruby version
+* Ruby v2.7.0
+* Ruby on Rails v5.2.4
 
-* System dependencies
+##Live Demo
+Link
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+##ERD
+![screenshot](docs/erd_final.png) 
