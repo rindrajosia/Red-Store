@@ -1,0 +1,2 @@
+class CreateJoinTableFavoritesProduct < ApplicationRecord
+end
