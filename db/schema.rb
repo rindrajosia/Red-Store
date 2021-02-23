@@ -52,8 +52,9 @@ ActiveRecord::Schema.define(version: 2021_02_23_204532) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.boolean "admin"
+    t.boolean "admin", default: false
     t.string "password_digest"
+    t.string "imageurl"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
