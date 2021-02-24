@@ -33,32 +33,6 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'GET /categories/:category_id/products/:id' do
-    before { get "/categories/#{category_id}/products/#{id}" }
-
-    context 'when category product exists' do
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'returns the product' do
-        expect(json['id']).to eq(id)
-      end
-    end
-
-    context 'when category product does not exist' do
-      let(:id) { 0 }
-
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
-      end
-
-      it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Product/)
-      end
-    end
-  end
-
   describe 'POST /categories/:category_id/users/:user_id/products' do
     let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post', imageurl: 'url' } }
 
@@ -83,10 +57,10 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'PUT /categories/:category_id/products/:id' do
+  describe 'PUT /categories/:category_id/users/:user_id/products/:id' do
     let(:valid_attributes) { { title: 'Mozart' } }
 
-    before { put "/categories/#{category_id}/products/#{id}", params: valid_attributes }
+    before { put "/categories/#{category_id}/users/#{user_id}/products/#{id}", params: valid_attributes }
 
     context 'when product exists' do
       it 'returns status code 204' do
@@ -112,8 +86,8 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'DELETE /categories/:category_id/products/:id' do
-    before { delete "/categories/#{category_id}/products/#{id}" }
+  describe 'DELETE /categories/:category_id/users/user_id/products/:id' do
+    before { delete "/categories/#{category_id}/users/#{user_id}/products/#{id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_category
-  before_action :set_user, only: [:create]
-  before_action :set_category_product, only: %i[show update destroy]
+  before_action :set_category_product_show, only: [:show]
+  before_action :set_user, only: %i[create update destroy]
+  before_action :set_category_product, only: %i[update destroy]
 
   def index
     json_response(@category.products)
@@ -17,7 +18,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product.update(product_params)
+    @product.update(product_params_create)
     head :no_content
   end
 
@@ -28,10 +29,6 @@ class ProductsController < ApplicationController
 
   private
 
-  def product_params
-    params.permit(:title, :description, :imageurl)
-  end
-
   def product_params_create
     params.permit(:title, :description, :imageurl, :user_id, :category_id) if @category && @user
   end
@@ -41,10 +38,14 @@ class ProductsController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = User.user_admin(params[:user_id])
+  end
+
+  def set_category_product_show
+    @product = @category.products.find_by!(id: params[:id]) if @category
   end
 
   def set_category_product
-    @product = @category.products.find_by!(id: params[:id]) if @category
+    @product = @category.products.find_by!(id: params[:id]) if @category && @user
   end
 end

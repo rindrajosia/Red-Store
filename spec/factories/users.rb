@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     email 'foo@bar.com'
     password_digest 'foobar'
-    admin false
+    admin true
     imageurl 'https://raw.githubusercontent.com/rindrajosia/back_end/feature/docs/erd_final.png'
   end
 end
