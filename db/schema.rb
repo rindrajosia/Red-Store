@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_204532) do
 
   create_table "favorites", force: :cascade do |t|
     t.string "name"
-    t.integer "priority"
+    t.bigint "priority"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

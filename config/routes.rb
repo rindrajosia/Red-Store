@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :categories do
     resources :products, only: [:index, :show, :update, :destroy]
   end
-  resources :users
+  resources :users do
+    resources :favorites
+  end
 
 end
