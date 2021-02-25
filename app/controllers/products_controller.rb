@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :set_category
-  before_action :set_category_product_show, only: [:show]
+  before_action :set_category, only: %i[index create update destroy]
+  before_action :set_product, only: [:show]
   before_action :set_user, only: %i[create update destroy]
   before_action :set_category_product, only: %i[update destroy]
 
@@ -41,8 +41,8 @@ class ProductsController < ApplicationController
     @user = User.user_admin(params[:user_id])
   end
 
-  def set_category_product_show
-    @product = @category.products.find_by!(id: params[:id]) if @category
+  def set_product
+    @product = Product.find(params[:id])
   end
 
   def set_category_product
