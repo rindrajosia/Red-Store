@@ -10,5 +10,14 @@ Rails.application.routes.draw do
   resources :users do
     resources :favorites
   end
+  resources :favorites, except: [:index, :show, :create, :update, :destroy] do
+    resources :products, except: [:index, :show, :create, :update, :destroy] do
+      resources :favorite_products, only: [:create, :update]
+    end
+  end
+
+  resources :favorites, except: [:index, :show, :create, :update, :destroy] do
+    resources :favorite_products, only: [:index, :show]
+  end
 
 end

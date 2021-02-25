@@ -202,7 +202,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   database_cleaner
-  factory_bot_rails (~> 4.0)
+  factory_bot_rails
   faker
   listen (~> 3.3)
   pg (~> 1.1)
