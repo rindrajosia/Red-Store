@@ -87,7 +87,6 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-
   describe 'DELETE /favorite_products/:id' do
     before { delete "/favorite_products/#{favorite_product_id}" }
 
