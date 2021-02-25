@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    puts params[:category_id]
     @product_create = Product.create!(product_params_create)
     json_response(@product_create, :created)
   end
