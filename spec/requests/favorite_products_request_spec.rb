@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable Layout/LineLength
 RSpec.describe 'FavoriteProducts' do
   let!(:user) { create(:user) }
   let!(:category) { create(:category) }
@@ -9,9 +9,10 @@ RSpec.describe 'FavoriteProducts' do
   let(:favorite_id) { favorite.id }
   let(:favorite_product_id) { favorite_product.first.id }
   let(:product_id) { product.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /favorites/:favorite_id/favorite_products' do
-    before { get "/favorites/#{favorite_id}/favorite_products" }
+    before { get "/favorites/#{favorite_id}/favorite_products", params: {}, headers: headers }
 
     context 'when favorite_products exists' do
       it 'returns status code 200' do
@@ -36,7 +37,7 @@ RSpec.describe 'FavoriteProducts' do
   end
 
   describe 'GET /favorites/:favorite_id/favorite_products/:id' do
-    before { get "/favorites/#{favorite_id}/favorite_products/#{favorite_product_id}" }
+    before { get "/favorites/#{favorite_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
 
     context 'when favorites favorite_products exists' do
       it 'returns status code 200' do
@@ -65,7 +66,7 @@ RSpec.describe 'FavoriteProducts' do
     let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id } }
 
     context 'when request attributes are valid' do
-      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products" }
+      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -75,7 +76,7 @@ RSpec.describe 'FavoriteProducts' do
     context 'when an invalid request' do
       let(:product_id) { 0 }
       let(:favorite_id) { 0 }
-      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products" }
+      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -87,11 +88,36 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
+  describe 'PUT /favorites/:favorite_id/products/:product_id/favorite_products/:id' do
+    let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id } }
+
+    before { put "/favorites/#{favorite_id}/products/#{product_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
+
+    context 'when product exists' do
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when the product does not exist' do
+      let(:favorite_product_id) { 0 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find FavoriteProduct/)
+      end
+    end
+  end
+
   describe 'DELETE /favorite_products/:id' do
-    before { delete "/favorite_products/#{favorite_product_id}" }
+    before { delete "/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
     end
   end
 end
+# rubocop:enable  Layout/LineLength
