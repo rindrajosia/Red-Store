@@ -1,4 +1,4 @@
-module User
+module Front
   class ProductsController < ApplicationController
     skip_before_action :authorize_request, only: %i[index show]
     before_action :set_category, only: %i[index]

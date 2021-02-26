@@ -1,4 +1,4 @@
-module User
+module Front
   class FavoritesController < ApplicationController
     before_action :set_user_favorite, only: %i[show update destroy]
 

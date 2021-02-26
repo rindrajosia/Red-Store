@@ -1,4 +1,4 @@
-module User
+module Front
   class FavoriteProductsController < ApplicationController
     before_action :set_favorites, only: %i[show index]
     before_action :set_favorite_product_list, only: %i[show]

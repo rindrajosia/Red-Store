@@ -1,4 +1,4 @@
-module User
+module Front
   class CategoriesController < ApplicationController
     before_action :set_category, only: %i[show]
     skip_before_action :authorize_request, only: %i[index show]

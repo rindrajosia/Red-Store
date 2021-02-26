@@ -24,15 +24,15 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: 'user', path: 'user', constraints: ApiVersion.new('user') do
+  scope module: 'front', path: 'front', constraints: ApiVersion.new('front', true) do
     resources :products, only: [:show]
 
     resources :categories, except: [:index, :show, :create, :update, :destroy] do
-      resources :products, only: [:index, :create]
+      resources :products, only: [:index, :show]
     end
 
     resources :favorites
-    resources :categories, only: [:show]
+    resources :categories, only: [:index, :show]
 
     resources :favorites, except: [:index, :show, :create, :update, :destroy] do
       resources :products, except: [:index, :show, :create, :update, :destroy] do
