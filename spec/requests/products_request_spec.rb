@@ -63,7 +63,7 @@ RSpec.describe 'Products', type: :request do
   end
 
   describe 'POST /categories/:category_id/products' do
-    let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post', imageurl: 'url' }.to_json }
+    let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post Visit Narnia', imageurl: 'url' }.to_json }
 
     context 'when request attributes are valid' do
       before { post "/categories/#{category_id}/products", params: valid_attributes, headers: headers }
@@ -87,7 +87,7 @@ RSpec.describe 'Products', type: :request do
   end
 
   describe 'PUT /categories/:category_id/products/:id' do
-    let(:valid_attributes) { { title: 'Mozart' }.to_json }
+    let(:valid_attributes) { { title: 'Mozart artist' }.to_json }
 
     before { put "/categories/#{category_id}/products/#{id}", params: valid_attributes, headers: headers }
 
