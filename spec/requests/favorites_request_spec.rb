@@ -7,8 +7,8 @@ RSpec.describe 'Favorites', type: :request do
   let(:id) { favorites.first.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /favorites' do
-    before { get '/favorites', params: {}, headers: headers }
+  describe 'GET /admin/favorites' do
+    before { get '/admin/favorites', params: {}, headers: headers }
 
     context 'when user exists' do
       it 'returns status code 200' do
@@ -21,8 +21,8 @@ RSpec.describe 'Favorites', type: :request do
     end
   end
 
-  describe 'GET /favorites/:id' do
-    before { get "/favorites/#{id}", params: {}, headers: headers }
+  describe 'GET /admin/favorites/:id' do
+    before { get "/admin/favorites/#{id}", params: {}, headers: headers }
 
     context 'when user favorite exists' do
       it 'returns status code 200' do
@@ -47,11 +47,11 @@ RSpec.describe 'Favorites', type: :request do
     end
   end
 
-  describe 'POST /favorites' do
+  describe 'POST /admin/favorites' do
     let(:valid_attributes) { { name: 'Visit Narnia', priority: 1 }.to_json }
 
     context 'when request attributes are valid' do
-      before { post '/favorites', params: valid_attributes, headers: headers }
+      before { post '/admin/favorites', params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -60,7 +60,7 @@ RSpec.describe 'Favorites', type: :request do
 
     context 'when an invalid request' do
       let(:invalid_attributes) { { name: nil, priority: nil }.to_json }
-      before { post '/favorites', params: {}, headers: headers }
+      before { post '/admin/favorites', params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -72,10 +72,10 @@ RSpec.describe 'Favorites', type: :request do
     end
   end
 
-  describe 'PUT /favorites/:id' do
+  describe 'PUT /admin/favorites/:id' do
     let(:valid_attributes) { { name: 'Mozart' }.to_json }
 
-    before { put "/favorites/#{id}", params: valid_attributes, headers: headers }
+    before { put "/admin/favorites/#{id}", params: valid_attributes, headers: headers }
 
     context 'when favorite exists' do
       it 'returns status code 204' do
@@ -101,8 +101,8 @@ RSpec.describe 'Favorites', type: :request do
     end
   end
 
-  describe 'DELETE /favorites/:id' do
-    before { delete "/favorites/#{id}", params: {}, headers: headers }
+  describe 'DELETE /admin/favorites/:id' do
+    before { delete "/admin/favorites/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

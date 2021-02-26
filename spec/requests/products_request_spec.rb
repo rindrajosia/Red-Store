@@ -9,8 +9,8 @@ RSpec.describe 'Products', type: :request do
   let(:id) { products.first.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /categories/:category_id/products' do
-    before { get "/categories/#{category_id}/products", params: {}, headers: headers }
+  describe 'GET /admin/categories/:category_id/products' do
+    before { get "/admin/categories/#{category_id}/products", params: {}, headers: headers }
 
     context 'when category exists' do
       it 'returns status code 200' do
@@ -35,8 +35,8 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'GET /products/:id' do
-    before { get "/products/#{id}", params: {}, headers: headers }
+  describe 'GET /admin/products/:id' do
+    before { get "/admin/products/#{id}", params: {}, headers: headers }
 
     context 'when the record exists' do
       it 'returns the product' do
@@ -62,11 +62,11 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'POST /categories/:category_id/products' do
+  describe 'POST /admin/categories/:category_id/products' do
     let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post Visit Narnia', imageurl: 'url' }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/categories/#{category_id}/products", params: valid_attributes, headers: headers }
+      before { post "/admin/categories/#{category_id}/products", params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,7 +74,7 @@ RSpec.describe 'Products', type: :request do
     end
 
     context 'when an invalid request' do
-      before { post "/categories/#{category_id}/products", params: {}, headers: headers }
+      before { post "/admin/categories/#{category_id}/products", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -86,10 +86,10 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'PUT /categories/:category_id/products/:id' do
+  describe 'PUT /admin/categories/:category_id/products/:id' do
     let(:valid_attributes) { { title: 'Mozart artist' }.to_json }
 
-    before { put "/categories/#{category_id}/products/#{id}", params: valid_attributes, headers: headers }
+    before { put "/admin/categories/#{category_id}/products/#{id}", params: valid_attributes, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 204' do
@@ -115,8 +115,8 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'DELETE products/:id' do
-    before { delete "/products/#{id}", params: {}, headers: headers }
+  describe 'DELETE /admin/products/:id' do
+    before { delete "/admin/products/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

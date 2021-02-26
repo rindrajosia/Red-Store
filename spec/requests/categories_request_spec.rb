@@ -7,8 +7,8 @@ RSpec.describe 'Categories', type: :request do
 
   let(:headers) { valid_headers }
 
-  describe 'GET /categories' do
-    before { get '/categories', params: {}, headers: headers }
+  describe 'GET /admin/categories' do
+    before { get '/admin/categories', params: {}, headers: headers }
     it 'returns categories' do
       expect(json).not_to be_empty
       expect(json.size).to eq(10)
@@ -19,8 +19,8 @@ RSpec.describe 'Categories', type: :request do
     end
   end
 
-  describe 'GET /categories/:id' do
-    before { get "/categories/#{category_id}", params: {}, headers: headers }
+  describe 'GET /admin/categories/:id' do
+    before { get "/admin/categories/#{category_id}", params: {}, headers: headers }
 
     context 'when the record exists' do
       it 'returns the category' do
@@ -46,11 +46,11 @@ RSpec.describe 'Categories', type: :request do
     end
   end
 
-  describe 'POST /categories' do
+  describe 'POST /admin/categories' do
     let(:valid_attributes) { { name: 'Learn Elm' }.to_json }
 
     context 'when the request is valid' do
-      before { post '/categories', params: valid_attributes, headers: headers }
+      before { post '/admin/categories', params: valid_attributes, headers: headers }
 
       it 'creates a category' do
         expect(json['name']).to eq('Learn Elm')
@@ -63,7 +63,7 @@ RSpec.describe 'Categories', type: :request do
 
     context 'when the request is invalid' do
       let(:invalid_attributes) { { name: nil }.to_json }
-      before { post '/categories', params: invalid_attributes, headers: headers }
+      before { post '/admin/categories', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -76,11 +76,11 @@ RSpec.describe 'Categories', type: :request do
     end
   end
 
-  describe 'PUT /categories/:id' do
+  describe 'PUT /admin/categories/:id' do
     let(:valid_attributes) { { name: 'E-tech' }.to_json }
 
     context 'when the record exists' do
-      before { put "/categories/#{category_id}", params: valid_attributes, headers: headers }
+      before { put "/admin/categories/#{category_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -92,8 +92,8 @@ RSpec.describe 'Categories', type: :request do
     end
   end
 
-  describe 'DELETE /categories/:id' do
-    before { delete "/categories/#{category_id}", params: {}, headers: headers }
+  describe 'DELETE /admin/categories/:id' do
+    before { delete "/admin/categories/#{category_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

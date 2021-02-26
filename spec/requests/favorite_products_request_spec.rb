@@ -11,8 +11,8 @@ RSpec.describe 'FavoriteProducts' do
   let(:product_id) { product.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /favorites/:favorite_id/favorite_products' do
-    before { get "/favorites/#{favorite_id}/favorite_products", params: {}, headers: headers }
+  describe 'GET /admin/favorites/:favorite_id/favorite_products' do
+    before { get "/admin/favorites/#{favorite_id}/favorite_products", params: {}, headers: headers }
 
     context 'when favorite_products exists' do
       it 'returns status code 200' do
@@ -36,8 +36,8 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'GET /favorites/:favorite_id/favorite_products/:id' do
-    before { get "/favorites/#{favorite_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
+  describe 'GET /admin/favorites/:favorite_id/favorite_products/:id' do
+    before { get "/admin/favorites/#{favorite_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
 
     context 'when favorites favorite_products exists' do
       it 'returns status code 200' do
@@ -62,11 +62,11 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'POST /favorites/:favorite_id/products/:product_id/favorite_products' do
+  describe 'POST /admin/favorites/:favorite_id/products/:product_id/favorite_products' do
     let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id } }
 
     context 'when request attributes are valid' do
-      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
+      before { post "/admin/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -76,7 +76,7 @@ RSpec.describe 'FavoriteProducts' do
     context 'when an invalid request' do
       let(:product_id) { 0 }
       let(:favorite_id) { 0 }
-      before { post "/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
+      before { post "/admin/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -88,10 +88,10 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'PUT /favorites/:favorite_id/products/:product_id/favorite_products/:id' do
+  describe 'PUT /admin/favorites/:favorite_id/products/:product_id/favorite_products/:id' do
     let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id } }
 
-    before { put "/favorites/#{favorite_id}/products/#{product_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
+    before { put "/admin/favorites/#{favorite_id}/products/#{product_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 204' do
@@ -112,8 +112,8 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'DELETE /favorite_products/:id' do
-    before { delete "/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
+  describe 'DELETE /admin/favorite_products/:id' do
+    before { delete "/admin/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

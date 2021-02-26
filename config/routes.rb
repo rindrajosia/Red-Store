@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
 
-  scope module: :admin, constraints: ApiVersion.new('admin', true) do
+  scope module: 'admin', path: 'admin', constraints: ApiVersion.new('admin', true) do
     resources :products, only: [:show, :destroy]
 
     resources :categories, except: [:index, :show, :create, :update, :destroy] do
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: :user, constraints: ApiVersion.new('user') do
+  scope module: 'user', path: 'user', constraints: ApiVersion.new('user') do
     resources :products, only: [:show]
 
     resources :categories, except: [:index, :show, :create, :update, :destroy] do
