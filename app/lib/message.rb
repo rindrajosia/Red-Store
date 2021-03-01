@@ -27,8 +27,8 @@ class Message
     'Account could not be created'
   end
 
-  def self.logout
-    'Deconnection successfull'
+  def self.login_success
+    'Login successfull'
   end
 
   def self.expired_token

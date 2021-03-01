@@ -8,6 +8,10 @@ class AuthenticateUser
     JsonWebToken.encode(user_id: user.id) if user
   end
 
+  def find_user
+    { user_id: user.id, name: user.name, email: user.email, admin: user.admin, imageurl: user.imageurl } if user
+  end
+
   private
 
   attr_reader :email, :password
