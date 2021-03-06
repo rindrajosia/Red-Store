@@ -1,11 +1,11 @@
 module Front
   class ProductsController < ApplicationController
     skip_before_action :authorize_request, only: %i[index show]
-    before_action :set_category, only: %i[index]
     before_action :set_product, only: %i[show]
 
     def index
-      json_response(@category.products)
+      @products = Product.all
+      json_response(@products)
     end
 
     def show
@@ -13,10 +13,6 @@ module Front
     end
 
     private
-
-    def set_category
-      @category = Category.find(params[:category_id])
-    end
 
     def set_product
       @product = Product.find(params[:id])

@@ -9,29 +9,16 @@ RSpec.describe 'Products', type: :request do
   let(:id) { products.first.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /admin/categories/:category_id/products' do
-    before { get "/admin/categories/#{category_id}/products", params: {}, headers: headers }
+  describe 'GET /admin/products' do
+    before { get '/admin/products', params: {}, headers: headers }
 
-    context 'when category exists' do
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'returns all category products' do
-        expect(json.size).to eq(20)
-      end
+    it 'returns products' do
+      expect(json).not_to be_empty
+      expect(json.size).to eq(20)
     end
 
-    context 'when category does not exist' do
-      let(:category_id) { 0 }
-
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
-      end
-
-      it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Category/)
-      end
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -50,7 +37,7 @@ RSpec.describe 'Products', type: :request do
     end
 
     context 'when the record does not exist' do
-      let(:id) { 100 }
+      let(:id) { 1000 }
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)
