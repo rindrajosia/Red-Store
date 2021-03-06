@@ -6,11 +6,12 @@ Rails.application.routes.draw do
     resources :products, only: [:show, :destroy]
 
     resources :categories, except: [:index, :show, :create, :update, :destroy] do
-      resources :products, only: [:index, :create, :update]
+      resources :products, only: [:create, :update]
     end
 
     resources :favorites
     resources :categories
+    resources :products, only: [:index]
 
     resources :favorites, except: [:index, :show, :create, :update, :destroy] do
       resources :products, except: [:index, :show, :create, :update, :destroy] do
@@ -28,11 +29,12 @@ Rails.application.routes.draw do
     resources :products, only: [:show]
 
     resources :categories, except: [:index, :show, :create, :update, :destroy] do
-      resources :products, only: [:index, :show]
+      resources :products, only: [:show]
     end
 
     resources :favorites
     resources :categories, only: [:index, :show]
+    resources :products, only: [:index]
 
     resources :favorites, except: [:index, :show, :create, :update, :destroy] do
       resources :products, except: [:index, :show, :create, :update, :destroy] do

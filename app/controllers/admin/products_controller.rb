@@ -1,13 +1,14 @@
 module Admin
   class ProductsController < ApplicationController
     skip_before_action :authorize_request, only: %i[index show]
-    before_action :set_category, only: %i[index create update]
+    before_action :set_category, only: %i[create update]
     before_action :set_product, only: %i[show destroy]
     before_action :set_category_product, only: %i[update]
     before_action :set_user, only: %i[create update destroy]
 
     def index
-      json_response(@category.products)
+      @products = Product.all
+      json_response(@products)
     end
 
     def show
