@@ -12,4 +12,5 @@ export const URL = {
   DELETE_FAVORITE: 'https://blooming-fjord-89301.herokuapp.com/admin/favorites',
   FETCH_FAVORITE_PRODUCTS: 'https://blooming-fjord-89301.herokuapp.com/admin/favorite_products',
   CREATE_FAVORITE_PRODUCT: 'https://blooming-fjord-89301.herokuapp.com/admin/favorite_products',
+  DELETE_FAVORITE_PRODUCT: 'https://blooming-fjord-89301.herokuapp.com/admin/favorite_products',
 };
