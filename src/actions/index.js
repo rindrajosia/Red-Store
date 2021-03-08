@@ -14,9 +14,25 @@ import {
   CREATE_PRODUCTS_FAILURE,
   CREATE_PRODUCTS_REQUEST,
   CREATE_PRODUCTS_SUCCESS,
+  UPDATE_PRODUCTS_FAILURE,
+  UPDATE_PRODUCTS_REQUEST,
+  UPDATE_PRODUCTS_SUCCESS,
+  FETCH_FAVORITES_REQUEST,
+  DELETE_PRODUCTS_FAILURE,
+  DELETE_PRODUCTS_REQUEST,
+  DELETE_PRODUCTS_SUCCESS,
   FETCH_FAVORITES_REQUEST,
   FETCH_FAVORITES_SUCCESS,
   FETCH_FAVORITES_FAILURE,
+  CREATE_FAVORITES_REQUEST,
+  CREATE_FAVORITES_SUCCESS,
+  CREATE_FAVORITES_FAILURE,
+  UPDATE_FAVORITES_REQUEST,
+  UPDATE_FAVORITES_SUCCESS,
+  UPDATE_FAVORITES_FAILURE,
+  DELETE_FAVORITES_REQUEST,
+  DELETE_FAVORITES_SUCCESS,
+  DELETE_FAVORITES_FAILURE,
   FETCH_FAVORITE_PRODUCTS_REQUEST,
   FETCH_FAVORITE_PRODUCTS_SUCCESS,
   FETCH_FAVORITE_PRODUCTS_FAILURE,
@@ -92,6 +108,34 @@ export const createProductsFailure = error => ({
   payload: error,
 });
 
+export const updateProductsRequest = () => ({
+  type: UPDATE_PRODUCTS_REQUEST,
+});
+
+export const updateProductsSuccess = products => ({
+  type: UPDATE_PRODUCTS_SUCCESS,
+  payload: data,
+});
+
+export const updateProductsFailure = error => ({
+  type: UPDATE_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const deleteProductsRequest = () => ({
+  type: DELETE_PRODUCTS_REQUEST,
+});
+
+export const deleteProductsSuccess = products => ({
+  type: DELETE_PRODUCTS_SUCCESS,
+  payload: data,
+});
+
+export const deleteProductsFailure = error => ({
+  type: DELETE_PRODUCTS_FAILURE,
+  payload: error,
+});
+
 export const fetchFavoritesRequest = () => ({
   type: FETCH_FAVORITES_REQUEST,
 });
@@ -103,6 +147,48 @@ export const fetchFavoritesSuccess = favorites => ({
 
 export const fetchFavoritesFailure = error => ({
   type: FETCH_FAVORITES_FAILURE,
+  payload: error,
+});
+
+export const createFavoritesRequest = () => ({
+  type: CREATE_FAVORITES_REQUEST,
+});
+
+export const createFavoritesSuccess = favorites => ({
+  type: CREATE_FAVORITES_SUCCESS,
+  payload: data,
+});
+
+export const createFavoritesFailure = error => ({
+  type: CREATE_FAVORITES_FAILURE,
+  payload: error,
+});
+
+export const updateFavoritesRequest = () => ({
+  type: UPDATE_FAVORITES_REQUEST,
+});
+
+export const updateFavoritesSuccess = favorites => ({
+  type: UPDATE_FAVORITES_SUCCESS,
+  payload: data,
+});
+
+export const updateFavoritesFailure = error => ({
+  type: UPDATE_FAVORITES_FAILURE,
+  payload: error,
+});
+
+export const deleteFavoritesRequest = () => ({
+  type: DELETE_FAVORITES_REQUEST,
+});
+
+export const deleteFavoritesSuccess = favorites => ({
+  type: DELETE_FAVORITES_SUCCESS,
+  payload: data,
+});
+
+export const deleteFavoritesFailure = error => ({
+  type: DELETE_FAVORITES_FAILURE,
   payload: error,
 });
 
@@ -212,6 +298,46 @@ export const createProduct = (url, token, data) => dispatch => {
   });
 };
 
+export const updateProduct = (url, token, data) => dispatch => {
+  dispatch(updateProductRequest);
+  return fetch(url,{
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(result => {
+    dispatch(updateProductSuccess(result));
+  })
+  .catch(error => {
+    dispatch(updateProductFailure(error));
+  });
+};
+
+export const deleteProduct = (url, token, data) => dispatch => {
+  dispatch(deleteProductRequest);
+  return fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(result => {
+    dispatch(deleteProductSuccess(result));
+  })
+  .catch(error => {
+    dispatch(deleteProductFailure(error));
+  });
+};
+
 export const fetchFavorites = (url, token, role) => dispatch => {
   dispatch(fetchFavoritesRequest);
   return fetch(url, {
@@ -234,6 +360,66 @@ export const fetchFavorites = (url, token, role) => dispatch => {
   })
   .catch(error => {
     dispatch(fetchFavoritesFailure(error));
+  });
+};
+
+export const createFavorites = (url, token, role) => dispatch => {
+  dispatch(createFavoritesRequest);
+  return fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    dispatch(createFavoritesSuccess(data));
+  })
+  .catch(error => {
+    dispatch(createFavoritesFailure(error));
+  });
+};
+
+export const updateFavorites = (url, token, role) => dispatch => {
+  dispatch(updateFavoritesRequest);
+  return fetch(url,{
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    dispatch(updateFavoritesSuccess(data));
+  })
+  .catch(error => {
+    dispatch(updateFavoritesFailure(error));
+  });
+};
+
+export const deleteFavorites = (url, token, role) => dispatch => {
+  dispatch(deleteFavoritesRequest);
+  return fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    dispatch(deleteFavoritesSuccess(data));
+  })
+  .catch(error => {
+    dispatch(deleteFavoritesFailure(error));
   });
 };
 
