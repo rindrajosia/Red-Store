@@ -11,6 +11,9 @@ import {
   FETCH_PRODUCTS_REQUEST,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
+  CREATE_PRODUCTS_FAILURE,
+  CREATE_PRODUCTS_REQUEST,
+  CREATE_PRODUCTS_SUCCESS,
   FETCH_FAVORITES_REQUEST,
   FETCH_FAVORITES_SUCCESS,
   FETCH_FAVORITES_FAILURE,
@@ -72,6 +75,20 @@ export const fetchProductsSuccess = products => ({
 
 export const fetchProductsFailure = error => ({
   type: FETCH_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const createProductsRequest = () => ({
+  type: CREATE_PRODUCTS_REQUEST,
+});
+
+export const createProductsSuccess = products => ({
+  type: CREATE_PRODUCTS_SUCCESS,
+  payload: data,
+});
+
+export const createProductsFailure = error => ({
+  type: CREATE_PRODUCTS_FAILURE,
   payload: error,
 });
 
@@ -172,6 +189,26 @@ export const fetchProducts = url => dispatch => {
   })
   .catch(error => {
     dispatch(fetchProductsFailure(error));
+  });
+};
+
+export const createProduct = (url, token, data) => dispatch => {
+  dispatch(createProductRequest);
+  return fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+      'Accept': `application/vnd.shop.admin+json`
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(result => {
+    dispatch(createProductSuccess(result));
+  })
+  .catch(error => {
+    dispatch(createProductFailure(error));
   });
 };
 
