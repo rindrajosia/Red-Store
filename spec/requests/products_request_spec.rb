@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable Layout/LineLength
 RSpec.describe 'Products', type: :request do
   let!(:category) { create(:category) }
   let!(:user) { create(:user, admin: true) }
@@ -49,11 +49,11 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'POST /admin/categories/:category_id/products' do
-    let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post Visit Narnia', imageurl: 'url' }.to_json }
+  describe 'POST /admin/products' do
+    let(:valid_attributes) { { title: 'Visit Narnia', description: 'test post Visit Narnia', category_id: category_id, imageurl: 'url' }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/admin/categories/#{category_id}/products", params: valid_attributes, headers: headers }
+      before { post '/admin/products', params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -61,7 +61,8 @@ RSpec.describe 'Products', type: :request do
     end
 
     context 'when an invalid request' do
-      before { post "/admin/categories/#{category_id}/products", params: {}, headers: headers }
+      let(:invalid_attributes) { { title: nil }.to_json }
+      before { post '/admin/products', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -73,10 +74,10 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'PUT /admin/categories/:category_id/products/:id' do
+  describe 'PUT /admin/products/:id' do
     let(:valid_attributes) { { title: 'Mozart artist' }.to_json }
 
-    before { put "/admin/categories/#{category_id}/products/#{id}", params: valid_attributes, headers: headers }
+    before { put "/admin/products/#{id}", params: valid_attributes, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 204' do
@@ -110,3 +111,4 @@ RSpec.describe 'Products', type: :request do
     end
   end
 end
+# rubocop:enable  Layout/LineLength

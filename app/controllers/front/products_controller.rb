@@ -17,9 +17,5 @@ module Front
     def set_product
       @product = Product.find(params[:id])
     end
-
-    def set_category_product
-      @product = @category.products.find_by!(id: params[:id])
-    end
   end
 end

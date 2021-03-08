@@ -1,9 +1,7 @@
 module Admin
   class ProductsController < ApplicationController
     skip_before_action :authorize_request, only: %i[index show]
-    before_action :set_category, only: %i[create update]
-    before_action :set_product, only: %i[show destroy]
-    before_action :set_category_product, only: %i[update]
+    before_action :set_product, only: %i[show destroy update]
     before_action :set_user, only: %i[create update destroy]
 
     def index
@@ -34,12 +32,8 @@ module Admin
 
     def product_params_create
       user = { user_id: @user.id }
-      @params = params.permit(:title, :description, :imageurl, :category_id) if @category && @user
+      @params = params.permit(:title, :description, :imageurl, :category_id) if @user
       @params.merge(user)
-    end
-
-    def set_category
-      @category = Category.find(params[:category_id])
     end
 
     def set_user
@@ -48,10 +42,6 @@ module Admin
 
     def set_product
       @product = Product.find(params[:id])
-    end
-
-    def set_category_product
-      @product = @category.products.find_by!(id: params[:id])
     end
   end
 end
