@@ -12,7 +12,7 @@ RSpec.describe 'FavoriteProducts' do
   let(:headers) { valid_headers }
 
   describe 'GET /admin/favorites/:favorite_id/favorite_products' do
-    before { get "/admin/favorites/#{favorite_id}/favorite_products", params: {}, headers: headers }
+    before { get '/admin/favorite_products', params: {}, headers: headers }
 
     context 'when favorite_products exists' do
       it 'returns status code 200' do
@@ -20,18 +20,6 @@ RSpec.describe 'FavoriteProducts' do
       end
       it 'returns all favorites products' do
         expect(json.size).to eq(20)
-      end
-    end
-
-    context 'when favorite does not exist' do
-      let(:favorite_id) { 0 }
-
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
-      end
-
-      it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Favorite/)
       end
     end
   end
@@ -62,11 +50,11 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'POST /admin/favorites/:favorite_id/products/:product_id/favorite_products' do
-    let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id } }
+  describe 'POST /admin/favorite_products' do
+    let(:valid_attributes) { { product_id: product_id, favorite_id: favorite_id }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/admin/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
+      before { post '/admin/favorite_products', params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,9 +62,8 @@ RSpec.describe 'FavoriteProducts' do
     end
 
     context 'when an invalid request' do
-      let(:product_id) { 0 }
-      let(:favorite_id) { 0 }
-      before { post "/admin/favorites/#{favorite_id}/products/#{product_id}/favorite_products", params: {}, headers: headers }
+      let(:invalid_attributes) { { product_id: nil, favorite_id: nil }.to_json }
+      before { post '/admin/favorite_products', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)

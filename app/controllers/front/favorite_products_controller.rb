@@ -1,10 +1,11 @@
 module Front
   class FavoriteProductsController < ApplicationController
-    before_action :set_favorites, only: %i[show index]
+    before_action :set_favorites, only: %i[show]
     before_action :set_favorite_product_list, only: %i[show]
     before_action :set_favorite_product, only: %i[update destroy]
     def index
-      json_response(@favorites.favorite_products)
+      @favorite_products = FavoriteProduct.all
+      json_response(@favorite_products)
     end
 
     def show
