@@ -3,7 +3,7 @@ module Admin
     before_action :set_user_favorite, only: %i[show update destroy]
 
     def index
-      @favorites = current_user.favorites
+      @favorites = Favorite.list(current_user.id)
       json_response(@favorites)
     end
 
