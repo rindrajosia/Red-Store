@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Favorites', type: :request do
   let!(:user) { create(:user) }
-  let!(:category) { create(:category) }
   let!(:favorites) { create_list(:favorite, 20, user_id: user.id) }
-  let!(:product) { create(:product, category_id: category.id, user_id: user.id) }
-  let!(:favorite_product) { create(:favorite_product, product_id: product.id, favorite_id: favorites.first.id) }
   let(:user_id) { user.id }
   let(:id) { favorites.first.id }
   let(:headers) { valid_headers }
@@ -18,8 +15,8 @@ RSpec.describe 'Favorites', type: :request do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns all user favorites' do
-        expect(json.size).to eq(1)
+      it 'returns all favorites products' do
+        expect(json.size).to eq(20)
       end
     end
   end

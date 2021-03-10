@@ -5,9 +5,9 @@ RSpec.describe 'FavoriteProducts' do
   let!(:category) { create(:category) }
   let!(:favorite) { create(:favorite, user_id: user.id) }
   let!(:product) { create(:product, category_id: category.id, user_id: user.id) }
-  let!(:favorite_product) { create_list(:favorite_product, 20, product_id: product.id, favorite_id: favorite.id) }
+  let!(:favorite_product) { create(:favorite_product, product_id: product.id, favorite_id: favorite.id) }
   let(:favorite_id) { favorite.id }
-  let(:favorite_product_id) { favorite_product.first.id }
+  let(:favorite_product_id) { favorite_product.id }
   let(:product_id) { product.id }
   let(:headers) { valid_headers }
 
@@ -19,7 +19,7 @@ RSpec.describe 'FavoriteProducts' do
         expect(response).to have_http_status(200)
       end
       it 'returns all favorites products' do
-        expect(json.size).to eq(20)
+        expect(json.size).to eq(1)
       end
     end
   end
