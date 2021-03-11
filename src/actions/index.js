@@ -1,4 +1,6 @@
 import {
+  CHANGE_FILTER_FAVORITE,
+  CHANGE_FILTER_CATEGORY,
   CREATE_USER_REQUEST,
   CREATE_USER_SUCCESS,
   CREATE_USER_FAILURE,
@@ -39,6 +41,20 @@ import {
   CREATE_FAVORITE_PRODUCT_SUCCESS,
   CREATE_FAVORITE_PRODUCT_FAILURE,
 } from './actionTypes';
+
+export const changeFilterFavorite = filter => ({
+  type: CHANGE_FILTER_FAVORITE,
+  payload: {
+    filter,
+  },
+});
+
+export const changeFilterCategory = filter => ({
+  type: CHANGE_FILTER_CATEGORY,
+  payload: {
+    filter,
+  },
+});
 
 export const createUserRequest = () => ({
   type: CREATE_USER_REQUEST,

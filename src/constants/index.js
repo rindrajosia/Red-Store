@@ -7,3 +7,11 @@
    FAVORITES: '/admin/favorites',
    FAVORITE_PRODUCTS: '/admin/favorite_products',
  }
+
+export const CATEGORY_FILTERS = {
+   ALL: 'All',
+ };
+
+ export const FAVORITE_FILTERS = {
+    ALL: 'All',
+  };
