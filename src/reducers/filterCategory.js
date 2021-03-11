@@ -3,7 +3,7 @@ import { CATEGORY_FILTERS } from '../constants';
 
 export const initialState = CATEGORY_FILTERS.ALL;
 
-const filterCategory = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_FILTER_CATEGORY: {
       return action.payload.filter;
@@ -14,4 +14,4 @@ const filterCategory = (state = initialState, action) => {
   }
 };
 
-export default filterCategory;
+export default reducer;

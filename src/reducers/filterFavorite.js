@@ -3,7 +3,7 @@ import { FAVORITE_FILTERS } from '../constants';
 
 export const initialState = FAVORITE_FILTERS.ALL;
 
-const filterFavorite = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_FILTER_FAVORITE: {
       return action.payload.filter;
@@ -14,4 +14,4 @@ const filterFavorite = (state = initialState, action) => {
   }
 };
 
-export default filterFavorite;
+export default reducer;

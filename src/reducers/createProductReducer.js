@@ -1,40 +1,34 @@
 import {
-  FETCH_USER_REQUEST,
-  FETCH_USER_SUCCESS,
-  FETCH_USER_FAILURE,
-  CREATE_USER_REQUEST,
-  CREATE_USER_SUCCESS,
-  CREATE_USER_FAILURE,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAILURE,
 } from '../actions/actionTypes';
 
 export const initialState = {
   loading: false,
-  user: [],
+  message: [],
   error: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_USER_REQUEST:
-    case FETCH_USER_REQUEST:
+    case CREATE_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case CREATE_USER_SUCCESS:
-    case FETCH_USER_SUCCESS:
-      return {
-        ...state,
-        loading: true,
-        user: action.payload,
-        error: '',
-      };
-    case CREATE_USER_FAILURE:
-    case FETCH_USER_FAILURE:
+    case CREATE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: [],
+        message: action.payload,
+        error: '',
+      };
+    case CREATE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        message: [],
         error: action.payload,
       };
     default:
