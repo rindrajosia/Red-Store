@@ -11,7 +11,7 @@ RSpec.describe 'FavoriteProducts' do
   let(:product_id) { product.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /admin/favorites/:favorite_id/favorite_products' do
+  describe 'GET /admin/favorite_products' do
     before { get '/admin/favorite_products', params: {}, headers: headers }
 
     context 'when favorite_products exists' do
