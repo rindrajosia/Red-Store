@@ -6,15 +6,16 @@ export const getCategoriesList = store => (getCategoriesState(store) || null);
 export const getProductsState = store => store.productFetch;
 export const getProductList = store => (getProductsState(store) || null);
 
-export const getProductByCategory = (store, filter) => {
+export const getProductByCategory = (store, filterCategory) => {
   const allProducts = getProductList(store);
-  switch (filter) {
+  console.log(filterCategory);
+  switch (filterCategory) {
     case CATEGORY_FILTERS.ALL:
       return allProducts;
     default:
       return {
         ...allProducts,
-        recipes: allProducts.recipes.filter(product => product.category_id === filter),
+        products: allProducts.products.filter(product => product.category_id === parseInt(filterCategory)),
       };
   }
 };

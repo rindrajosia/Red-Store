@@ -4,29 +4,42 @@ import { fetchProducts, changeFilterCategory } from '../actions';
 import { URL } from '../constants';
 
 import { getProductByCategory } from '../redux/selectors';
+import CategoryFilter from './CategoryFilter';
+import Product from '../components/Product';
 
 const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) => {
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
   }, [fetchProducts]);
 
-  const handleFilterChange = filter => {
-    changeFilterCategory(filter);
+  const handleFilterChange = filterCategory => {
+    changeFilterCategory(filterCategory);
   };
 
   return (
-    <>
-      <div className="lesson-panel">
-        hello
+    <div className="small-container">
+      <div className="row row-2">
+        <h2>Recipes Categories</h2>
+        <CategoryFilter handleFilterChange={handleFilterChange} />
       </div>
-    </>
+      <div className="row-wrap">
+        {productData.loading && <h2 className="info">Loading</h2>}
+        {productData.error && <h2 className="info">{productData.error}</h2>}
+        {
+          productData && productData.products && productData.products.length
+            ? productData.products.map(product => <Product key={product.id} product={product} />) : (
+              <h2 className="info">No Products for this category.</h2>
+            )
+        }
+      </div>
+    </div>
   );
 };
 
 
 const mapStateToProps = state => {
-  const { filter } = state;
-  const productData = getProductByCategory(state, 'All');
+  const { filterCategory } = state;
+  const productData = getProductByCategory(state, filterCategory);
   return { productData };
 };
 
