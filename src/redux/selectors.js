@@ -8,7 +8,6 @@ export const getProductList = store => (getProductsState(store) || null);
 
 export const getProductByCategory = (store, filterCategory) => {
   const allProducts = getProductList(store);
-  console.log(filterCategory);
   switch (filterCategory) {
     case CATEGORY_FILTERS.ALL:
       return allProducts;
@@ -22,5 +21,5 @@ export const getProductByCategory = (store, filterCategory) => {
 
 export const getProductById = (productList, id) => {
   const { products } = productList;
-  return products.filter(product => product.id === id.toString())[0];
+  return products.filter(product => product.id === parseInt(id))[0];
 };
