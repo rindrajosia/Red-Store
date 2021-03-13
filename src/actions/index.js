@@ -62,7 +62,7 @@ export const createUserRequest = () => ({
 
 export const createUserSuccess = user => ({
   type: CREATE_USER_SUCCESS,
-  payload: data,
+  payload: user,
 });
 
 export const createUserFailure = error => ({
@@ -76,7 +76,7 @@ export const fetchUserRequest = () => ({
 
 export const fetchUserSuccess = user => ({
   type: FETCH_USER_SUCCESS,
-  payload: data,
+  payload: user,
 });
 
 export const fetchUserFailure = error => ({
@@ -90,7 +90,7 @@ export const fetchCategoriesRequest = () => ({
 
 export const fetchCategoriesSuccess = categories => ({
   type: FETCH_CATEGORIES_SUCCESS,
-  payload: data,
+  payload: categories,
 });
 
 export const fetchCategoriesFailure = error => ({
@@ -104,7 +104,7 @@ export const fetchProductsRequest = () => ({
 
 export const fetchProductsSuccess = products => ({
   type: FETCH_PRODUCTS_SUCCESS,
-  payload: data,
+  payload: products,
 });
 
 export const fetchProductsFailure = error => ({
@@ -118,7 +118,7 @@ export const createProductRequest = () => ({
 
 export const createProductSuccess = products => ({
   type: CREATE_PRODUCT_SUCCESS,
-  payload: data,
+  payload: products,
 });
 
 export const createProductFailure = error => ({
@@ -132,7 +132,7 @@ export const updateProductRequest = () => ({
 
 export const updateProductSuccess = products => ({
   type: UPDATE_PRODUCT_SUCCESS,
-  payload: data,
+  payload: products,
 });
 
 export const updateProductFailure = error => ({
@@ -146,7 +146,7 @@ export const deleteProductRequest = () => ({
 
 export const deleteProductSuccess = products => ({
   type: DELETE_PRODUCT_SUCCESS,
-  payload: data,
+  payload: products,
 });
 
 export const deleteProductFailure = error => ({
@@ -160,7 +160,7 @@ export const fetchFavoritesRequest = () => ({
 
 export const fetchFavoritesSuccess = favorites => ({
   type: FETCH_FAVORITES_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const fetchFavoritesFailure = error => ({
@@ -174,7 +174,7 @@ export const createFavoriteRequest = () => ({
 
 export const createFavoriteSuccess = favorites => ({
   type: CREATE_FAVORITE_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const createFavoriteFailure = error => ({
@@ -188,7 +188,7 @@ export const updateFavoriteRequest = () => ({
 
 export const updateFavoriteSuccess = favorites => ({
   type: UPDATE_FAVORITE_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const updateFavoriteFailure = error => ({
@@ -202,7 +202,7 @@ export const deleteFavoriteRequest = () => ({
 
 export const deleteFavoriteSuccess = favorites => ({
   type: DELETE_FAVORITE_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const deleteFavoriteFailure = error => ({
@@ -216,7 +216,7 @@ export const fetchFavoriteProductsRequest = () => ({
 
 export const fetchFavoriteProductsSuccess = favorites => ({
   type: FETCH_FAVORITE_PRODUCTS_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const fetchFavoriteProductsFailure = error => ({
@@ -230,7 +230,7 @@ export const createFavoriteProductRequest = () => ({
 
 export const createFavoriteProductSuccess = favorites => ({
   type: CREATE_FAVORITE_PRODUCT_SUCCESS,
-  payload: data,
+  payload: favorites,
 });
 
 export const createFavoriteProductFailure = error => ({
@@ -294,7 +294,6 @@ export const fetchProducts = url => dispatch => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
   })
   .then(response => {
     if (!response.ok) {
@@ -370,7 +369,7 @@ export const deleteProduct = (id, url, token, data) => dispatch => {
   });
 };
 
-export const fetchFavorites = (url, token, role) => dispatch => {
+export const fetchFavorites = (url, token, role, data) => dispatch => {
   dispatch(fetchFavoritesRequest);
   return fetch(url, {
     method: 'GET',
@@ -387,15 +386,15 @@ export const fetchFavorites = (url, token, role) => dispatch => {
     }
     return response.json();
   })
-  .then(data => {
-    dispatch(fetchFavoritesSuccess(data));
+  .then(response => {
+    dispatch(fetchFavoritesSuccess(response));
   })
   .catch(error => {
     dispatch(fetchFavoritesFailure(error));
   });
 };
 
-export const createFavorite = (url, token, role) => dispatch => {
+export const createFavorite = (url, token, role, data) => dispatch => {
   dispatch(createFavoriteRequest);
   return fetch(url,{
     method: 'POST',
@@ -407,15 +406,15 @@ export const createFavorite = (url, token, role) => dispatch => {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    dispatch(createFavoriteSuccess(data));
+  .then(response => {
+    dispatch(createFavoriteSuccess(response));
   })
   .catch(error => {
     dispatch(createFavoriteFailure(error));
   });
 };
 
-export const updateFavorite = (id, url, token, role) => dispatch => {
+export const updateFavorite = (id, url, token, role, data) => dispatch => {
   dispatch(updateFavoriteRequest);
   return fetch(`${url}/${id}`,{
     method: 'PUT',
@@ -427,15 +426,15 @@ export const updateFavorite = (id, url, token, role) => dispatch => {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    dispatch(updateFavoriteSuccess(data));
+  .then(response => {
+    dispatch(updateFavoriteSuccess(response));
   })
   .catch(error => {
     dispatch(updateFavoriteFailure(error));
   });
 };
 
-export const deleteFavorite = (id, url, token, role) => dispatch => {
+export const deleteFavorite = (id, url, token, role, data) => dispatch => {
   dispatch(deleteFavoriteRequest);
   return fetch(`${url}/${id}`,{
     method: 'DELETE',
@@ -447,8 +446,8 @@ export const deleteFavorite = (id, url, token, role) => dispatch => {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    dispatch(deleteFavoriteSuccess(data));
+  .then(response => {
+    dispatch(deleteFavoriteSuccess(response));
   })
   .catch(error => {
     dispatch(deleteFavoriteFailure(error));
@@ -464,7 +463,6 @@ export const fetchFavoriteProducts = (url, token, role) => dispatch => {
       'Authorization': `${token}`,
       'Accept': `application/vnd.shop.${role}+json`
     },
-    body: JSON.stringify(data),
   })
   .then(response => {
     if (!response.ok) {
@@ -480,7 +478,7 @@ export const fetchFavoriteProducts = (url, token, role) => dispatch => {
   });
 };
 
-export const createFavoriteProduct = (url, token, role) => dispatch => {
+export const createFavoriteProduct = (url, token, role, data) => dispatch => {
   dispatch(createFavoriteProductRequest);
   return fetch(url,{
     method: 'POST',
@@ -492,8 +490,8 @@ export const createFavoriteProduct = (url, token, role) => dispatch => {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    dispatch(createFavoriteProductSuccess(data));
+  .then(response => {
+    dispatch(createFavoriteProductSuccess(response));
   })
   .catch(error => {
     dispatch(createFavoriteProductFailure(error));
