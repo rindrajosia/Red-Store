@@ -1,4 +1,7 @@
 import {
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAILURE,
   CHANGE_FILTER_FAVORITE,
   CHANGE_FILTER_CATEGORY,
   CREATE_USER_REQUEST,
@@ -41,6 +44,20 @@ import {
   CREATE_FAVORITE_PRODUCT_SUCCESS,
   CREATE_FAVORITE_PRODUCT_FAILURE,
 } from './actionTypes';
+
+export const uploadImageRequest = () => ({
+  type: UPLOAD_IMAGE_REQUEST,
+});
+
+export const uploadImageSuccess = image => ({
+  type: UPLOAD_IMAGE_SUCCESS,
+  payload: image,
+});
+
+export const uploadImageFailure = error => ({
+  type: UPLOAD_IMAGE_FAILURE,
+  payload: error,
+});
 
 export const changeFilterFavorite = filter => ({
   type: CHANGE_FILTER_FAVORITE,
@@ -237,6 +254,25 @@ export const createFavoriteProductFailure = error => ({
   type: CREATE_FAVORITE_PRODUCT_FAILURE,
   payload: error,
 });
+
+export const uploadImage = (url, preset, file) => dispatch => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", preset);
+
+  dispatch(uploadImageRequest);
+  return fetch(url,{
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(result => {
+    dispatch(uploadImageSuccess(result.secure_url));
+  })
+  .catch(error => {
+    dispatch(uploadImageFailure(error));
+  });
+};
 
 export const createUser = (url, data) => dispatch => {
   dispatch(createUserRequest);

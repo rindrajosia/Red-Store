@@ -1,40 +1,34 @@
 import {
-  FETCH_USER_REQUEST,
-  FETCH_USER_SUCCESS,
-  FETCH_USER_FAILURE,
-  CREATE_USER_REQUEST,
-  CREATE_USER_SUCCESS,
-  CREATE_USER_FAILURE,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAILURE,
 } from '../actions/actionTypes';
 
 export const initialState = {
   loading: false,
-  user: [],
+  imageurl: [],
   error: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_USER_REQUEST:
-    case FETCH_USER_REQUEST:
+    case UPLOAD_IMAGE_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case CREATE_USER_SUCCESS:
-    case FETCH_USER_SUCCESS:
+    case UPLOAD_IMAGE_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: action.payload,
+        imageurl: action.payload,
         error: '',
       };
-    case CREATE_USER_FAILURE:
-    case FETCH_USER_FAILURE:
+    case UPLOAD_IMAGE_FAILURE:
       return {
         ...state,
         loading: false,
-        user: [],
+        imageurl: [],
         error: action.payload,
       };
     default:

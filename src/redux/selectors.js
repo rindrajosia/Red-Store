@@ -23,3 +23,9 @@ export const getProductById = (productList, id) => {
   const { products } = productList;
   return products.filter(product => product.id === parseInt(id))[0];
 };
+
+export const getUserState = store => store.user;
+export const getUserInfo = store => (getUserState(store) || null);
+
+export const getImageState = store => store.uploadImage;
+export const getImageInfo = store => (getImageState(store) || null);

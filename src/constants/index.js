@@ -15,3 +15,6 @@ export const CATEGORY_FILTERS = {
  export const FAVORITE_FILTERS = {
     ALL: 'All',
   };
+
+export const CLOUDINARY_UPLOAD_PRESET = 'josiarindra';
+export const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/rindrajosia/image/upload';
