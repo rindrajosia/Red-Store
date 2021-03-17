@@ -434,7 +434,7 @@ export const fetchFavorites = (url, token, role, data) => dispatch => {
   });
 };
 
-export const createFavorite = (url, token, role, data) => dispatch => {
+export const createFavorite = (url, token, data) => dispatch => {
   dispatch(createFavoriteRequest);
   return fetch(url,{
     method: 'POST',

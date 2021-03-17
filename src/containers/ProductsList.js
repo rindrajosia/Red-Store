@@ -21,6 +21,7 @@ const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) 
     <div className="small-container">
       <div className="row row-2">
       <Link to="/new-product" className="btn">New Product </Link>
+      <Link to="/new-favorite" className="btn">New Favorite </Link>
         <h2>Recipes Categories</h2>
         <CategoryFilter handleFilterChange={handleFilterChange} />
       </div>
