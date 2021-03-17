@@ -12,12 +12,12 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_PRODUCT_SUCCESS:
+    case UPDATE_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case UPDATE_PRODUCT_REQUEST:
+    case UPDATE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,

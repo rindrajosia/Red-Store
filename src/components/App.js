@@ -4,6 +4,7 @@ import ProductsList from '../containers/ProductsList';
 import Product from '../containers/Single';
 import Login from '../containers/Login';
 import AddProduct from '../containers/AddProduct';
+import EditeProduct from '../containers/EditeProduct';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={ProductsList} />
           <Route path="/product/:id" component={Product} />
+          <Route path="/product-edit/:id" component={EditeProduct} />
           <Route path="/login" component={Login} />
           <Route path="/new-product" component={AddProduct} />
         </Switch>

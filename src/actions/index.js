@@ -381,7 +381,11 @@ export const updateProduct = (id, url, token, data) => dispatch => {
     dispatch(updateProductSuccess(result));
   })
   .catch(error => {
-    dispatch(updateProductFailure(error));
+    if (Object.keys(error).length !== 0){
+      dispatch(updateProductFailure(error));
+    }else{
+      updateProductSuccess(error);
+    }
   });
 };
 

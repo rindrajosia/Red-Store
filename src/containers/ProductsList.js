@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchProducts, changeFilterCategory } from '../actions';
 import { URL } from '../constants';
+import { Link } from 'react-router-dom';
 
 import { getProductByCategory } from '../redux/selectors';
 import CategoryFilter from './CategoryFilter';
@@ -19,6 +20,7 @@ const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) 
   return (
     <div className="small-container">
       <div className="row row-2">
+      <Link to="/new-product" className="btn">New Product </Link>
         <h2>Recipes Categories</h2>
         <CategoryFilter handleFilterChange={handleFilterChange} />
       </div>

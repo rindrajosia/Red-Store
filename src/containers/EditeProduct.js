@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { imgCheck } from '../logic/checkImg';
 import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants';
-import { createProduct } from '../actions';
+import { updateProduct } from '../actions';
 import CategoryFilter from './CategoryFilter';
-import { getUserInfo, getCategoriesList } from '../redux/selectors';
+import { getUserInfo, getCategoriesList, getProductById, getProductList } from '../redux/selectors';
 
-const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList }) => {
+const EditeProduct = ({ match, updateProduct, productData, userData, categoriesData, getCategoriesList }) => {
 
-
-
-  const [product, setProduct] = useState({ title: '', description: '', category_id: '1', imageurl:''});
+  const { id } = match.params;
+  const details = getProductById(productData, id);
+  const [product, setProduct] = useState({ title: details.title, description: details.description, category_id: details.category_id, imageurl: details.imageurl});
   const [error, setError] = useState('');
   const [url, setUrl] = useState('');
   const handleChange = e => {
@@ -37,7 +38,7 @@ const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList
             category_id: product.category_id,
             imageurl: response.secure_url,
           }
-          createProduct(`${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
+          updateProduct(details.id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
           }
       })
       .catch(err => console.error(err))
@@ -46,12 +47,19 @@ const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList
   const handleSubmit = (e) => {
     e.preventDefault();
     if (product.title && product.description && product.category_id && product.imageurl) {
-      if(!imgCheck(product.imageurl.name)){
+      if(!imgCheck(product.imageurl.name) && product.imageurl !== details.imageurl){
         setError((prevState) => {
           return `${prevState} Not an Image!`;
         });
       }else{
-        handleImageUpload(product.imageurl);
+        let dataUp = {
+          title: product.title,
+          description: product.description,
+          category_id: product.category_id,
+          imageurl: product.imageurl,
+        }
+        console.log(dataUp);
+        product.imageurl !== details.imageurl? handleImageUpload(product.imageurl) : updateProduct(details.id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, dataUp);
       }
 
     }
@@ -60,6 +68,9 @@ const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList
   return (
     <div className="wrapper">
       {error && <h2>{error}</h2>}
+      <div className="col-2">
+        <img className="img-single" src={details.imageurl} alt="" />
+      </div>
       <form>
       <fieldset>
         <label htmlFor="title"> Title:
@@ -85,7 +96,7 @@ const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList
 
          <fieldset>
            <label htmlFor="category"> Categories:
-           <select name="category_id" id ="category" value={product.category} onChange={handleChange}>
+           <select name="category_id" id ="category" value={product.category_id} onChange={handleChange}>
             {categoriesData.categories.map(category => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -111,10 +122,11 @@ const AddProduct = ({ createProduct, userData, categoriesData, getCategoriesList
 const mapStateToProps = state => {
   const userData = getUserInfo(state);
   const categoriesData = getCategoriesList(state);
-  return { userData, categoriesData };
+  const productData = getProductList(state);
+  return { userData, categoriesData, productData };
 };
 
 export default connect(
   mapStateToProps,
-  { createProduct },
-)(AddProduct);
+  { updateProduct },
+)(EditeProduct);
