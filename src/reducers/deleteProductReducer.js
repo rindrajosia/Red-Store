@@ -17,14 +17,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-    case DELETE_PRODUCT_REQUEST:
+    case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         message: action.payload,
         error: '',
       };
-    case DELETE_PRODUCT_REQUEST:
+    case DELETE_PRODUCT_FAILURE:
       return {
         ...state,
         loading: false,

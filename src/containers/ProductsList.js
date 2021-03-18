@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchProducts, changeFilterCategory } from '../actions';
 import { URL } from '../constants';
-import { Link } from 'react-router-dom';
 
 import { getProductByCategory } from '../redux/selectors';
 import CategoryFilter from './CategoryFilter';
@@ -20,8 +22,9 @@ const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) 
   return (
     <div className="small-container">
       <div className="row row-2">
-      <Link to="/new-product" className="btn">New Product </Link>
-      <Link to="/new-favorite" className="btn">New Favorite </Link>
+        <Link to="/new-product" className="btn">New Product </Link>
+        <Link to="/new-favorite" className="btn">New Favorite </Link>
+        <Link to="/favorite" className="btn">Favorite </Link>
         <h2>Recipes Categories</h2>
         <CategoryFilter handleFilterChange={handleFilterChange} />
       </div>
@@ -39,6 +42,11 @@ const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) 
   );
 };
 
+ProductComponent.propTypes = {
+  productData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  fetchProducts: PropTypes.func.isRequired,
+  changeFilterCategory: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => {
   const { filterCategory } = state;
@@ -50,3 +58,5 @@ export default connect(
   mapStateToProps,
   { fetchProducts, changeFilterCategory },
 )(ProductComponent);
+
+/* eslint-enable max-len */

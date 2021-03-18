@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { URL } from '../constants';
-import { createFavorite } from '../actions';
-import { getUserInfo } from '../redux/selectors';
+import { updateFavorite } from '../actions';
+import { getUserInfo, getFavoriteById, getFavoriteList } from '../redux/selectors';
 
-const CreateFavorite = ({ createFavorite, userData }) => {
-  const [favorite, setFavorite] = useState({ name: '', priority: '1' });
+const EditeFavorite = ({
+  match, updateFavorite, favoriteData, userData,
+}) => {
+  const { id } = match.params;
+  const details = getFavoriteById(favoriteData, id);
+  const [favorite, setFavorite] = useState({ name: details.name, priority: details.priority });
   const [error, setError] = useState('');
   const handleChange = e => {
     const { name, value } = e.target;
@@ -16,7 +20,7 @@ const CreateFavorite = ({ createFavorite, userData }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (favorite.name && favorite.priority) {
-      createFavorite(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token, favorite);
+      updateFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token, favorite);
     } else {
       setError(prevState => `${prevState} Name should not empty`);
     }
@@ -66,17 +70,20 @@ const CreateFavorite = ({ createFavorite, userData }) => {
   );
 };
 
-CreateFavorite.propTypes = {
+EditeFavorite.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  createFavorite: PropTypes.func.isRequired,
+  favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  updateFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
   const userData = getUserInfo(state);
-  return { userData };
+  const favoriteData = getFavoriteList(state);
+  return { userData, favoriteData };
 };
 
 export default connect(
   mapStateToProps,
-  { createFavorite },
-)(CreateFavorite);
+  { updateFavorite },
+)(EditeFavorite);

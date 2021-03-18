@@ -1,6 +1,5 @@
 import { CATEGORY_FILTERS } from '../constants';
-
-
+/* eslint-disable max-len */
 export const getCategoriesState = store => store.categoryFetch;
 export const getCategoriesList = store => (getCategoriesState(store) || null);
 export const getProductsState = store => store.productFetch;
@@ -14,14 +13,14 @@ export const getProductByCategory = (store, filterCategory) => {
     default:
       return {
         ...allProducts,
-        products: allProducts.products.filter(product => product.category_id === parseInt(filterCategory)),
+        products: allProducts.products.filter(product => product.category_id === parseInt(filterCategory, 10)),
       };
   }
 };
 
 export const getProductById = (productList, id) => {
   const { products } = productList;
-  return products.filter(product => product.id === parseInt(id))[0];
+  return products.filter(product => product.id === parseInt(id, 10))[0];
 };
 
 export const getUserState = store => store.user;
@@ -29,3 +28,12 @@ export const getUserInfo = store => (getUserState(store) || null);
 
 export const getImageState = store => store.uploadImage;
 export const getImageInfo = store => (getImageState(store) || null);
+
+export const getFavoritesState = store => store.favoriteFetch;
+export const getFavoriteList = store => (getFavoritesState(store) || null);
+
+export const getFavoriteById = (favoriteList, id) => {
+  const { favorites } = favoriteList;
+  return favorites.filter(favorite => favorite.id === parseInt(id, 10))[0];
+};
+/* eslint-enable max-len */

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProductById, getProductList } from '../redux/selectors';
@@ -36,6 +37,11 @@ const Product = ({ match, productData }) => {
       </div>
     </div>
   );
+};
+
+Product.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  productData: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = state => {

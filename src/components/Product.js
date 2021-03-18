@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Product = ({ product }) => {
   const { id, title, imageurl } = product;
@@ -20,5 +21,7 @@ const Product = ({ product }) => {
     </div>
   );
 };
-
+Product.propTypes = {
+  product: PropTypes.instanceOf(Object).isRequired,
+};
 export default Product;

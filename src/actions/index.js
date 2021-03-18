@@ -257,53 +257,53 @@ export const createFavoriteProductFailure = error => ({
 
 export const uploadImage = (url, preset, file) => dispatch => {
   const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", preset);
+  formData.append('file', file);
+  formData.append('upload_preset', preset);
 
   dispatch(uploadImageRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
-    body: formData
+    body: formData,
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(uploadImageSuccess(result.secure_url));
-  })
-  .catch(error => {
-    dispatch(uploadImageFailure(error));
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(uploadImageSuccess(result.secure_url));
+    })
+    .catch(error => {
+      dispatch(uploadImageFailure(error));
+    });
 };
 
 export const createUser = (url, data) => dispatch => {
   dispatch(createUserRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(createUserSuccess(result));
-  })
-  .catch(error => {
-    dispatch(createUserFailure(error));
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(createUserSuccess(result));
+    })
+    .catch(error => {
+      dispatch(createUserFailure(error));
+    });
 };
 
 export const fetchUser = (url, data) => dispatch => {
   dispatch(fetchUserRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(fetchUserSuccess(result));
-  })
-  .catch(error => {
-    dispatch(fetchUserFailure(error));
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(fetchUserSuccess(result));
+    })
+    .catch(error => {
+      dispatch(fetchUserFailure(error));
+    });
 };
 
 export const fetchCategories = url => dispatch => {
@@ -328,170 +328,169 @@ export const fetchProducts = url => dispatch => {
   return fetch(url, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error - 404 not found');
-    }
-    return response.json();
-  })
-  .then(data => {
-    dispatch(fetchProductsSuccess(data));
-  })
-  .catch(error => {
-    dispatch(fetchProductsFailure(error));
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
+    .then(data => {
+      dispatch(fetchProductsSuccess(data));
+    })
+    .catch(error => {
+      dispatch(fetchProductsFailure(error));
+    });
 };
 
 export const createProduct = (url, token, data) => dispatch => {
   dispatch(createProductRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(createProductSuccess(result));
-  })
-  .catch(error => {
-    dispatch(createProductFailure(error));
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(createProductSuccess(result));
+    })
+    .catch(error => {
+      dispatch(createProductFailure(error));
+    });
 };
 
 export const updateProduct = (id, url, token, data) => dispatch => {
   dispatch(updateProductRequest);
-  return fetch(`${url}/${id}`,{
+  return fetch(`${url}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(updateProductSuccess(result));
-  })
-  .catch(error => {
-    if (Object.keys(error).length !== 0){
-      dispatch(updateProductFailure(error));
-    }else{
-      updateProductSuccess(error);
-    }
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(updateProductSuccess(result));
+    })
+    .catch(error => {
+      if (Object.keys(error).length !== 0) {
+        dispatch(updateProductFailure(error));
+      } else {
+        updateProductSuccess(error);
+      }
+    });
 };
 
 export const deleteProduct = (id, url, token, data) => dispatch => {
   dispatch(deleteProductRequest);
-  return fetch(`${url}/${id}`,{
+  return fetch(`${url}/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(result => {
-    dispatch(deleteProductSuccess(result));
-  })
-  .catch(error => {
-    dispatch(deleteProductFailure(error));
-  });
+    .then(response => response.json())
+    .then(result => {
+      dispatch(deleteProductSuccess(result));
+    })
+    .catch(error => {
+      dispatch(deleteProductFailure(error));
+    });
 };
 
-export const fetchFavorites = (url, token, role, data) => dispatch => {
+export const fetchFavorites = (url, token) => dispatch => {
   dispatch(fetchFavoritesRequest);
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.${role}+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
-    body: JSON.stringify(data),
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error - 404 not found');
-    }
-    return response.json();
-  })
-  .then(response => {
-    dispatch(fetchFavoritesSuccess(response));
-  })
-  .catch(error => {
-    dispatch(fetchFavoritesFailure(error));
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
+    .then(response => {
+      dispatch(fetchFavoritesSuccess(response));
+    })
+    .catch(error => {
+      dispatch(fetchFavoritesFailure(error));
+    });
 };
 
 export const createFavorite = (url, token, data) => dispatch => {
   dispatch(createFavoriteRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(response => {
-    dispatch(createFavoriteSuccess(response));
-  })
-  .catch(error => {
-    dispatch(createFavoriteFailure(error));
-  });
+    .then(response => response.json())
+    .then(response => {
+      dispatch(createFavoriteSuccess(response));
+    })
+    .catch(error => {
+      dispatch(createFavoriteFailure(error));
+    });
 };
 
-export const updateFavorite = (id, url, token, role, data) => dispatch => {
+export const updateFavorite = (id, url, token, data) => dispatch => {
   dispatch(updateFavoriteRequest);
-  return fetch(`${url}/${id}`,{
+  return fetch(`${url}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(response => {
-    dispatch(updateFavoriteSuccess(response));
-  })
-  .catch(error => {
-    dispatch(updateFavoriteFailure(error));
-  });
+    .then(response => response.json())
+    .then(response => {
+      dispatch(updateFavoriteSuccess(response));
+    })
+    .catch(error => {
+      dispatch(updateFavoriteFailure(error));
+    });
 };
 
 export const deleteFavorite = (id, url, token, role, data) => dispatch => {
   dispatch(deleteFavoriteRequest);
-  return fetch(`${url}/${id}`,{
+  return fetch(`${url}/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.admin+json`
+      Authorization: `${token}`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(response => {
-    dispatch(deleteFavoriteSuccess(response));
-  })
-  .catch(error => {
-    dispatch(deleteFavoriteFailure(error));
-  });
+    .then(response => response.json())
+    .then(response => {
+      dispatch(deleteFavoriteSuccess(response));
+    })
+    .catch(error => {
+      dispatch(deleteFavoriteFailure(error));
+    });
 };
 
 export const fetchFavoriteProducts = (url, token, role) => dispatch => {
@@ -500,40 +499,40 @@ export const fetchFavoriteProducts = (url, token, role) => dispatch => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.${role}+json`
+      Authorization: `${token}`,
+      Accept: `application/vnd.shop.${role}+json`,
     },
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error - 404 not found');
-    }
-    return response.json();
-  })
-  .then(data => {
-    dispatch(fetchFavoriteProductsSuccess(data));
-  })
-  .catch(error => {
-    dispatch(fetchFavoriteProductsFailure(error));
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
+    .then(data => {
+      dispatch(fetchFavoriteProductsSuccess(data));
+    })
+    .catch(error => {
+      dispatch(fetchFavoriteProductsFailure(error));
+    });
 };
 
 export const createFavoriteProduct = (url, token, role, data) => dispatch => {
   dispatch(createFavoriteProductRequest);
-  return fetch(url,{
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
-      'Accept': `application/vnd.shop.${role}+json`
+      Authorization: `${token}`,
+      Accept: `application/vnd.shop.${role}+json`,
     },
     body: JSON.stringify(data),
   })
-  .then(response => response.json())
-  .then(response => {
-    dispatch(createFavoriteProductSuccess(response));
-  })
-  .catch(error => {
-    dispatch(createFavoriteProductFailure(error));
-  });
+    .then(response => response.json())
+    .then(response => {
+      dispatch(createFavoriteProductSuccess(response));
+    })
+    .catch(error => {
+      dispatch(createFavoriteProductFailure(error));
+    });
 };

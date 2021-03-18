@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../actions';
 import { getCategoriesList } from '../redux/selectors';
@@ -29,6 +30,17 @@ const CategoryFilter = ({
       }
     </>
   );
+};
+
+CategoryFilter.propTypes = {
+  filterCategory: PropTypes.string,
+  categoriesData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  fetchCategories: PropTypes.func.isRequired,
+  handleFilterChange: PropTypes.func.isRequired,
+};
+
+CategoryFilter.defaultProps = {
+  filterCategory: CATEGORY_FILTERS.ALL,
 };
 
 const mapStateToProps = state => {

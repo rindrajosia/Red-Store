@@ -28,7 +28,7 @@ export default combineReducers({
   deleteProduct: deleteProductReducer,
   updateFavorite: updateFavoriteReducer,
   updateProduct: updateProductReducer,
-  filterCategory: filterCategory,
-  filterFavorite: filterFavorite,
+  filterCategory,
+  filterFavorite,
   uploadImage: uploadImageReducer,
 });
