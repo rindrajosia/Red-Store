@@ -4,7 +4,7 @@ module Admin
     before_action :set_favorite_product_list, only: %i[show]
     before_action :set_favorite_product, only: %i[update destroy]
     def index
-      @favorite_product = Favorite.list_products(current_user.id)
+      @favorite_product = FavoriteProduct.list(current_user.id)
       json_response(@favorite_product)
     end
 
