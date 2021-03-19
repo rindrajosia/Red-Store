@@ -28,11 +28,8 @@ Rails.application.routes.draw do
         resources :favorite_products, only: [:update]
       end
     end
-    resources :favorite_products, only: [:destroy, :create, :index]
+    resources :favorite_products, only: [:destroy, :create, :index, :show]
 
-    resources :favorites, except: [:index, :show, :create, :update, :destroy] do
-      resources :favorite_products, only: [:show]
-    end
   end
 
 
