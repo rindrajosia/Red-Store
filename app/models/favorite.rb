@@ -9,7 +9,7 @@ class Favorite < ApplicationRecord
     Favorite.find_by(user_id: user_id).products.includes(:favorite_products)
   end
 
-  def self.list(user_id)
+  def self.list_products(user_id)
     Favorite.find_by(user_id: user_id).products
   end
 end
