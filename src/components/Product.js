@@ -18,6 +18,9 @@ const Product = ({ product }) => {
       <Link to={`/product-edit/${id}`} className="btn">
         Edit
       </Link>
+      <Link to={`/add-favorite/${id}`} className="btn">
+        Add to favorite
+      </Link>
     </div>
   );
 };

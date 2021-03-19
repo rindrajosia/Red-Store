@@ -10,7 +10,9 @@ import { getProductByCategory } from '../redux/selectors';
 import CategoryFilter from './CategoryFilter';
 import Product from '../components/Product';
 
-const ProductComponent = ({ productData, fetchProducts, changeFilterCategory }) => {
+const ProductComponent = ({
+  productData, fetchProducts, changeFilterCategory,
+}) => {
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
   }, [fetchProducts]);

@@ -25,6 +25,9 @@ const Product = ({ match, productData }) => {
               <br />
               <p className="instructions">{details.description}</p>
               <Link to="/" className="btn">Go Back </Link>
+              <Link to={`/add-favorite/${id}`} className="btn">
+                Add to favorite
+              </Link>
             </div>
           </>
         ) : (

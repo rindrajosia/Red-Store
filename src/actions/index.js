@@ -493,14 +493,14 @@ export const deleteFavorite = (id, url, token, role, data) => dispatch => {
     });
 };
 
-export const fetchFavoriteProducts = (url, token, role) => dispatch => {
+export const fetchFavoriteProducts = (url, token) => dispatch => {
   dispatch(fetchFavoriteProductsRequest);
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `${token}`,
-      Accept: `application/vnd.shop.${role}+json`,
+      Accept: 'application/vnd.shop.admin+json',
     },
   })
     .then(response => {
@@ -517,14 +517,14 @@ export const fetchFavoriteProducts = (url, token, role) => dispatch => {
     });
 };
 
-export const createFavoriteProduct = (url, token, role, data) => dispatch => {
+export const createFavoriteProduct = (url, token, data) => dispatch => {
   dispatch(createFavoriteProductRequest);
   return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `${token}`,
-      Accept: `application/vnd.shop.${role}+json`,
+      Accept: 'application/vnd.shop.admin+json',
     },
     body: JSON.stringify(data),
   })

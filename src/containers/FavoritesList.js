@@ -3,16 +3,22 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchFavorites } from '../actions';
+import { fetchFavorites, fetchFavoriteProducts } from '../actions';
 import { URL } from '../constants';
 
 import Favorite from '../components/Favorite';
 import { getUserInfo, getFavoriteList } from '../redux/selectors';
 
-const FavoriteComponent = ({ userData, favoriteData, fetchFavorites }) => {
+const FavoriteComponent = ({
+  userData, favoriteData, fetchFavorites, fetchFavoriteProducts,
+}) => {
   useEffect(() => {
     fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
   }, [fetchFavorites]);
+
+  useEffect(() => {
+    fetchFavoriteProducts(`${URL.BASE}${URL.FAVORITE_PRODUCTS}`, userData.user.auth_token);
+  }, [fetchFavoriteProducts]);
 
   return (
     <div className="small-container">
@@ -38,6 +44,7 @@ FavoriteComponent.propTypes = {
   userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchFavorites: PropTypes.func.isRequired,
+  fetchFavoriteProducts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -48,6 +55,6 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchFavorites },
+  { fetchFavorites, fetchFavoriteProducts },
 )(FavoriteComponent);
 /* eslint-enable max-len */

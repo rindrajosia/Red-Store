@@ -1,4 +1,4 @@
-import { CATEGORY_FILTERS } from '../constants';
+import { CATEGORY_FILTERS, FAVORITE_FILTERS } from '../constants';
 /* eslint-disable max-len */
 export const getCategoriesState = store => store.categoryFetch;
 export const getCategoriesList = store => (getCategoriesState(store) || null);
@@ -36,4 +36,21 @@ export const getFavoriteById = (favoriteList, id) => {
   const { favorites } = favoriteList;
   return favorites.filter(favorite => favorite.id === parseInt(id, 10))[0];
 };
+
+export const getFavoriteProductsState = store => store.favoriteProductFetch;
+export const getFavoriteProductList = store => (getFavoriteProductsState(store) || null);
+
+export const getFavoriteProductByFavorite = (store, filterFavorite) => {
+  const allFavoriteProducts = getFavoriteProductList(store);
+  switch (filterFavorite) {
+    case FAVORITE_FILTERS.ALL:
+      return allFavoriteProducts;
+    default:
+      return {
+        ...allFavoriteProducts,
+        favorites_products: allFavoriteProducts.products.filter(product => product.category_id === parseInt(filterFavorite, 10)),
+      };
+  }
+};
+
 /* eslint-enable max-len */
