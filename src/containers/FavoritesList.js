@@ -17,7 +17,7 @@ const FavoriteComponent = ({
   }, [fetchFavorites]);
 
   useEffect(() => {
-    fetchFavoriteProducts(`${URL.BASE}${URL.FAVORITE_PRODUCTS}`, userData.user.auth_token);
+    fetchFavoriteProducts(`${URL.BASE}${URL.FAVORITE_PRODUCTS}`, 1, userData.user.auth_token);
   }, [fetchFavoriteProducts]);
 
   return (

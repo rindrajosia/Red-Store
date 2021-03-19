@@ -493,9 +493,9 @@ export const deleteFavorite = (id, url, token, role, data) => dispatch => {
     });
 };
 
-export const fetchFavoriteProducts = (url, token) => dispatch => {
+export const fetchFavoriteProducts = (url, favoriteId, token) => dispatch => {
   dispatch(fetchFavoriteProductsRequest);
-  return fetch(url, {
+  return fetch(`${url}/${favoriteId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

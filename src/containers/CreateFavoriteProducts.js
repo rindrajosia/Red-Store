@@ -10,7 +10,7 @@ const CreateFavoriteProducts = ({
 }) => {
   const { id } = match.params;
   const [favoriteProduct, setFavoriteProduct] = useState({
-    favorite_id: '', product_id: id,
+    favorite_id: 1, product_id: id,
   });
   const [error, setError] = useState('');
   const handleChange = e => {
