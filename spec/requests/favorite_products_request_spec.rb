@@ -19,7 +19,7 @@ RSpec.describe 'FavoriteProducts' do
         expect(response).to have_http_status(200)
       end
       it 'returns all favorites products' do
-        expect(json.size).to eq(1)
+        expect(json.size).to eq(2)
       end
     end
   end
