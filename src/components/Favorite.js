@@ -6,7 +6,9 @@ const Favorite = ({ favorite }) => {
   const { id, name } = favorite;
   return (
     <div className="col-4-wrap">
-      <h4>{name}</h4>
+      <Link to={`/favorite-product/${id}`} className="btn">
+        <h4>{name}</h4>
+      </Link>
       <Link to={`/favorite-edit/${id}`} className="btn">
         Edit
       </Link>

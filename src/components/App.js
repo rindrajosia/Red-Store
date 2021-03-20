@@ -9,6 +9,7 @@ import CreateFavorite from '../containers/CreateFavorite';
 import EditeFavorite from '../containers/EditeFavorite';
 import FavoritesList from '../containers/FavoritesList';
 import CreateFavoriteProducts from '../containers/CreateFavoriteProducts';
+import FavoriteProduct from '../containers/FavoriteProduct';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/favorite" component={FavoritesList} />
           <Route path="/favorite-edit/:id" component={EditeFavorite} />
           <Route path="/add-favorite/:id" component={CreateFavoriteProducts} />
+          <Route path="/favorite-product/:id" component={FavoriteProduct} />
         </Switch>
       </section>
     </Router>
