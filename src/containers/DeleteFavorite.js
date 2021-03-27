@@ -3,29 +3,24 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { URL } from '../constants';
-import { updateFavorite } from '../actions';
+import { deleteFavorite } from '../actions';
 import { getUserInfo, getFavoriteById, getFavoriteList } from '../redux/selectors';
 
-const EditeFavorite = ({
-  match, updateFavorite, favoriteData, userData,
+const DeleteFavorite = ({
+  match, deleteFavorite, favoriteData, userData,
 }) => {
   const { id } = match.params;
   const details = getFavoriteById(favoriteData, id);
-  const [favorite, setFavorite] = useState({ name: details.name, priority: details.priority });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFavorite({ ...favorite, [name]: value });
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (favorite.name && favorite.priority) {
-      updateFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token, favorite);
-      setSuccess(prevState => `${prevState} Edit with success`);
+    if (!details.name || !id) {
+      setError(prevState => `${prevState}  Favorite with id ${id} not found`);
     } else {
-      setError(prevState => `${prevState} Name should not empty`);
+      deleteFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
+      setSuccess(prevState => `${prevState} Delete with success`);
     }
   };
 
@@ -36,39 +31,31 @@ const EditeFavorite = ({
       <h2>
         {success}
         {' '}
-        <Redirect to="/favorite" />
+        <Redirect to="/" />
       </h2>
       )}
-      <div className="row-wrap">
-        {userData.loading && <h2 className="info">Loading</h2>}
-        {!userData.user.auth_token && !userData && <Redirect to="/" /> }
-      </div>
-      <p className="sign" align="center">Edit favorite</p>
+      <p className="sign" align="center">Delete favorite</p>
       <form className="form1">
+        <input
+          type="text"
+          id="id"
+          name="id"
+          value={id}
+          className="un"
+          disabled
+        />
         <input
           type="text"
           id="name"
           name="name"
-          value={favorite.name}
-          onChange={handleChange}
+          value={details.name}
           className="un"
+          disabled
         />
-
-        <select name="priority" id="priority" className="un" value={favorite.priority} onChange={handleChange}>
-          <option value={1}>
-            Low
-          </option>
-          <option value={2}>
-            Medium
-          </option>
-          <option value={3}>
-            High
-          </option>
-        </select>
 
         <div className="center">
           <button type="submit" className="btn" onClick={handleSubmit}>
-            Edit
+            Delete
           </button>
         </div>
       </form>
@@ -76,11 +63,11 @@ const EditeFavorite = ({
   );
 };
 
-EditeFavorite.propTypes = {
+DeleteFavorite.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  updateFavorite: PropTypes.func.isRequired,
+  deleteFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -91,5 +78,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateFavorite },
-)(EditeFavorite);
+  { deleteFavorite },
+)(DeleteFavorite);

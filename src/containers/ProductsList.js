@@ -2,63 +2,107 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchProducts, changeFilterCategory } from '../actions';
+import { fetchProducts, fetchCategories } from '../actions';
 import { URL } from '../constants';
 
-import { getProductByCategory } from '../redux/selectors';
-import CategoryFilter from './CategoryFilter';
+import { getProductByCatId, getCategoriesList } from '../redux/selectors';
 import Product from '../components/Product';
 
 const ProductComponent = ({
-  productData, fetchProducts, changeFilterCategory,
+  productDataOne, productDataTwo, productDataThree, fetchProducts, fetchCategories, categoriesData,
 }) => {
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
   }, [fetchProducts]);
 
-  const handleFilterChange = filterCategory => {
-    changeFilterCategory(filterCategory);
-  };
+  useEffect(() => {
+    fetchCategories(`${URL.BASE}${URL.FETCH_CATEGORIES}`);
+  }, [fetchCategories]);
 
   return (
-    <div className="small-container">
-      <div className="row row-2">
-        <Link to="/new-product" className="btn">New Product </Link>
-        <Link to="/new-favorite" className="btn">New Favorite </Link>
-        <Link to="/favorite" className="btn">Favorite </Link>
-        <h2>Recipes Categories</h2>
-        <CategoryFilter handleFilterChange={handleFilterChange} />
-      </div>
-      <div className="row-wrap">
-        {productData.loading && <h2 className="info">Loading</h2>}
-        {productData.error && <h2 className="info">{productData.error}</h2>}
-        {
-          productData && productData.products && productData.products.length
-            ? productData.products.map(product => <Product key={product.id} product={product} />) : (
-              <h2 className="info">No Products for this category.</h2>
-            )
-        }
-      </div>
-    </div>
+    <>
+      <main>
+        {categoriesData.loading && <h2>Loading</h2> }
+        {categoriesData.error && <h2>{categoriesData.error}</h2> }
+        {categoriesData.categories && categoriesData.categories.length && (
+        <>
+          <h2 className="title">{categoriesData.categories[0].name}</h2>
+
+          <div className="small-container">
+            <div className="row-wrap">
+              {productDataOne.loading && <h2 className="info">Loading</h2>}
+              {productDataOne.error && <h2 className="info">{productDataOne.error}</h2>}
+              {
+              productDataOne && productDataOne.products && productDataOne.products.length
+                ? productDataOne.products.map(product => <Product key={product.id} product={product} />) : (
+                  <h2 className="info">No Products for this category.</h2>
+                )
+            }
+            </div>
+          </div>
+
+          <h2 className="title">{categoriesData.categories[1].name}</h2>
+
+          <div className="small-container">
+            <div className="row-wrap">
+              {productDataTwo.loading && <h2 className="info">Loading</h2>}
+              {productDataTwo.error && <h2 className="info">{productDataTwo.error}</h2>}
+              {
+              productDataTwo && productDataTwo.products && productDataTwo.products.length
+                ? productDataTwo.products.map(product => <Product key={product.id} product={product} />) : (
+                  <h2 className="info">No Products for this category.</h2>
+                )
+            }
+            </div>
+          </div>
+
+          <h2 className="title">{categoriesData.categories[2].name}</h2>
+
+          <div className="small-container">
+            <div className="row-wrap">
+              {productDataThree.loading && <h2 className="info">Loading</h2>}
+              {productDataThree.error && <h2 className="info">{productDataThree.error}</h2>}
+              {
+              productDataThree && productDataThree.products && productDataThree.products.length
+                ? productDataThree.products.map(product => <Product key={product.id} product={product} />) : (
+                  <h2 className="info">No Products for this category.</h2>
+                )
+            }
+            </div>
+          </div>
+        </>
+        )}
+
+      </main>
+
+    </>
   );
 };
 
 ProductComponent.propTypes = {
-  productData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  productDataOne: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  productDataTwo: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  productDataThree: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  categoriesData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchProducts: PropTypes.func.isRequired,
-  changeFilterCategory: PropTypes.func.isRequired,
+  fetchCategories: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
   const { filterCategory } = state;
-  const productData = getProductByCategory(state, filterCategory);
-  return { productData };
+  const productDataOne = getProductByCatId(state, 1);
+  const productDataTwo = getProductByCatId(state, 2);
+  const productDataThree = getProductByCatId(state, 3);
+  const categoriesData = getCategoriesList(state);
+  console.log(categoriesData);
+  return {
+    filterCategory, categoriesData, productDataOne, productDataTwo, productDataThree,
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchProducts, changeFilterCategory },
+  { fetchProducts, fetchCategories },
 )(ProductComponent);
 
 /* eslint-enable max-len */

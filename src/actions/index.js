@@ -384,12 +384,12 @@ export const updateProduct = (id, url, token, data) => dispatch => {
       if (Object.keys(error).length !== 0) {
         dispatch(updateProductFailure(error));
       } else {
-        updateProductSuccess(error);
+        dispatch(updateProductSuccess(error));
       }
     });
 };
 
-export const deleteProduct = (id, url, token, data) => dispatch => {
+export const deleteProduct = (id, url, token) => dispatch => {
   dispatch(deleteProductRequest);
   return fetch(`${url}/${id}`, {
     method: 'DELETE',
@@ -398,14 +398,17 @@ export const deleteProduct = (id, url, token, data) => dispatch => {
       Authorization: `${token}`,
       Accept: 'application/vnd.shop.admin+json',
     },
-    body: JSON.stringify(data),
   })
     .then(response => response.json())
     .then(result => {
       dispatch(deleteProductSuccess(result));
     })
     .catch(error => {
-      dispatch(deleteProductFailure(error));
+      if (Object.keys(error).length !== 0) {
+        dispatch(deleteProductFailure(error));
+      } else {
+        dispatch(deleteProductSuccess(error));
+      }
     });
 };
 
@@ -469,11 +472,15 @@ export const updateFavorite = (id, url, token, data) => dispatch => {
       dispatch(updateFavoriteSuccess(response));
     })
     .catch(error => {
-      dispatch(updateFavoriteFailure(error));
+      if (Object.keys(error).length !== 0) {
+        dispatch(updateFavoriteFailure(error));
+      } else {
+        dispatch(updateFavoriteSuccess(error));
+      }
     });
 };
 
-export const deleteFavorite = (id, url, token, role, data) => dispatch => {
+export const deleteFavorite = (id, url, token) => dispatch => {
   dispatch(deleteFavoriteRequest);
   return fetch(`${url}/${id}`, {
     method: 'DELETE',
@@ -482,14 +489,17 @@ export const deleteFavorite = (id, url, token, role, data) => dispatch => {
       Authorization: `${token}`,
       Accept: 'application/vnd.shop.admin+json',
     },
-    body: JSON.stringify(data),
   })
     .then(response => response.json())
     .then(response => {
       dispatch(deleteFavoriteSuccess(response));
     })
     .catch(error => {
-      dispatch(deleteFavoriteFailure(error));
+      if (Object.keys(error).length !== 0) {
+        dispatch(deleteFavoriteFailure(error));
+      } else {
+        dispatch(deleteFavoriteSuccess(error));
+      }
     });
 };
 

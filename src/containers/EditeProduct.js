@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { imgCheck } from '../logic/checkImg';
 import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants';
@@ -14,6 +15,7 @@ const EditeProduct = ({
 }) => {
   const { id } = match.params;
   const details = getProductById(productData, id);
+  const [success, setSuccess] = useState('');
   const [product, setProduct] = useState({
     title: details.title, description: details.description, category_id: details.category_id, imageurl: details.imageurl,
   });
@@ -28,108 +30,99 @@ const EditeProduct = ({
   };
 
   const handleImageUpload = file => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const data = { ...product };
+    if (file !== details.imageurl) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-    fetch(CLOUDINARY_UPLOAD_URL, {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response.secure_url !== '') {
-          const data = {
-            title: product.title,
-            description: product.description,
-            category_id: product.category_id,
-            imageurl: response.secure_url,
-          };
-          updateProduct(details.id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
-        }
+      fetch(CLOUDINARY_UPLOAD_URL, {
+        method: 'POST',
+        body: formData,
       })
-      .catch(err => console.error(err));
+        .then(response => response.json())
+        .then(response => {
+          if (response.secure_url !== '') {
+            data.imageurl = response.secure_url;
+            updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
+            setSuccess(prevState => `${prevState} Update with success`);
+          }
+        })
+        .catch(err => {
+          setError(prevState => `${prevState} ${err}`);
+        });
+    } else {
+      data.imageurl = product.imageurl;
+      console.log(data);
+      updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
+      setSuccess(prevState => `${prevState} Update with success`);
+    }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     if (product.title && product.description && product.category_id && product.imageurl) {
-      if (!imgCheck(product.imageurl.name) && product.imageurl !== details.imageurl) {
-        setError(prevState => `${prevState} Not an Image!`);
-      } else if (product.imageurl !== details.imageurl) {
-        handleImageUpload(product.imageurl);
+      if (((product.imageurl !== details.imageurl) && !imgCheck(product.imageurl.name)) || product.title.length < 10 || product.description.length < 10) {
+        console.log(product);
+        console.log(details.imageurl);
+        setError(prevState => `${prevState}  Not an image or title and desription length < 10 `);
       } else {
-        const dataUp = {
-          title: product.title,
-          description: product.description,
-          category_id: product.category_id,
-          imageurl: product.imageurl,
-        };
-        updateProduct(details.id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, dataUp);
+        handleImageUpload(product.imageurl);
       }
     }
   };
 
   return (
-    <div className="wrapper">
-      {error && <h2>{error}</h2>}
-      <div className="col-2">
-        <img className="img-single" src={details.imageurl} alt="" />
+    <main className="main-edit">
+      {error && <h5 className="center">{error}</h5>}
+      {success && (
+      <h2>
+        {success}
+        {' '}
+        <Redirect to="/products" />
+      </h2>
+      )}
+      <div className="center">
+        <img src={details.imageurl} className="img-edit" alt="product" />
       </div>
-      <form>
-        <fieldset>
-          <label htmlFor="title">
-            {' '}
-            Title:
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={product.title}
-              onChange={handleChange}
-            />
-          </label>
-        </fieldset>
+      <p className="sign" align="center">Edit product</p>
+      <form className="form1">
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={product.title}
+          onChange={handleChange}
+          placeholder="title"
+          className="un"
+        />
 
-        <fieldset>
-          <label htmlFor="description">
-            {' '}
-            Description:
-            <textarea
-              id="description"
-              name="description"
-              value={product.description}
-              onChange={handleChange}
-            />
-          </label>
-        </fieldset>
+        <textarea
+          id="description"
+          name="description"
+          value={product.description}
+          onChange={handleChange}
+          placeholder="description"
+          className="pass"
+        />
 
-        <fieldset>
-          <label htmlFor="category">
-            {' '}
-            Categories:
-            <select name="category_id" id="category" value={product.category_id} onChange={handleChange}>
-              {categoriesData.categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </fieldset>
-        <fieldset>
-          <label htmlFor="image">
-            {' '}
-            Image:
-            <input name="imageurl" onChange={handleChange} type="file" multiple={false} accept="/images/*" />
-          </label>
-        </fieldset>
+        <select name="category_id" className="un" id="category" value={product.category_id} onChange={handleChange}>
+          {categoriesData.categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
 
-        <button type="submit" className="btn" onClick={handleSubmit}>
-          Login
-        </button>
+        <input name="imageurl" className="un" onChange={handleChange} type="file" multiple={false} accept="/images/*" />
+
+        <div className="center">
+          <button type="submit" className="btn" onClick={handleSubmit}>
+            Edit
+          </button>
+        </div>
       </form>
-    </div>
+    </main>
   );
 };
 

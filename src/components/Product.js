@@ -12,15 +12,11 @@ const Product = ({ product }) => {
         Id:
         {id}
       </p>
-      <Link to={`/product/${id}`} className="btn">
-        Explore Now
-      </Link>
-      <Link to={`/product-edit/${id}`} className="btn">
-        Edit
-      </Link>
-      <Link to={`/add-favorite/${id}`} className="btn">
-        Add to favorite
-      </Link>
+      <p>
+        <Link to={`/product/${id}`} className="btn-product">
+          Explore Now
+        </Link>
+      </p>
     </div>
   );
 };

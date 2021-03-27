@@ -8,6 +8,7 @@ import { getUserInfo } from '../redux/selectors';
 
 const Login = ({ userData, fetchUser }) => {
   const [login, setLogin] = useState({ email: '', password: '' });
+  const [disable, setDisable] = useState('');
   const handleChange = e => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
@@ -17,48 +18,47 @@ const Login = ({ userData, fetchUser }) => {
     e.preventDefault();
     if (login.email && login.password) {
       fetchUser(`${URL.BASE}${URL.FETCH_USER}`, login);
+      setDisable({ disable: 'disabled' });
       setLogin({ email: '', password: '' });
     }
   };
   return (
-    <div className="wrapper">
+
+    <main className="main-sign">
       <div className="row-wrap">
         {userData.loading && <h2 className="info">Loading</h2>}
         {!userData.loading && userData.user.message && !userData.user.auth_token && <h2 className="info">E-mail and Password Invalid</h2>}
         {userData.user.auth_token && <Redirect to="/" /> }
       </div>
-      <form>
-        <fieldset>
-          <label htmlFor="email">
-            {' '}
-            E-mail:
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={login.email}
-              onChange={handleChange}
-            />
-          </label>
-        </fieldset>
-        <fieldset>
-          <label htmlFor="password">
-            {' '}
-            Password:
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={login.password}
-              onChange={handleChange}
-            />
-          </label>
-        </fieldset>
-        <button type="submit" className="btn" onClick={handleSubmit}>
-          Login
-        </button>
+      <p className="sign" align="center">Sign in</p>
+      <form className="form1">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={login.email}
+          onChange={handleChange}
+          className="un"
+          placeholder="email"
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={login.password}
+          onChange={handleChange}
+          className="pass"
+          placeholder="password"
+        />
+        <div className="center">
+          <button type="submit" disabled={disable} className="btn" onClick={handleSubmit}>
+            Login
+          </button>
+        </div>
       </form>
-    </div>
+
+    </main>
+
   );
 };
 

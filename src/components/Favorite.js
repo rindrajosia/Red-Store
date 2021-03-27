@@ -5,14 +5,23 @@ import PropTypes from 'prop-types';
 const Favorite = ({ favorite }) => {
   const { id, name } = favorite;
   return (
-    <div className="col-4-wrap">
-      <Link to={`/favorite-product/${id}`} className="btn">
-        <h4>{name}</h4>
-      </Link>
-      <Link to={`/favorite-edit/${id}`} className="btn">
-        Edit
-      </Link>
-    </div>
+    <tr>
+      <td>
+        <Link to={`/favorite-product/${id}`}>
+          <h4>{name}</h4>
+        </Link>
+      </td>
+      <td>
+        <Link to={`/favorite-edit/${id}`} className="btn">
+          Edit
+        </Link>
+      </td>
+      <td>
+        <Link to={`/favorite-del/${id}`} className="btn">
+          Del
+        </Link>
+      </td>
+    </tr>
   );
 };
 

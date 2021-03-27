@@ -1,0 +1,83 @@
+.main,
+.main-sign,
+.main-edit,
+.main-del {
+  background-color: rgba(243, 241, 239, 1);
+  width: 400px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.main {
+  height: 600px;
+}
+
+.main-sign {
+  height: 400px;
+}
+
+.main-edit {
+  height: 700px;
+}
+
+.main-del {
+  height: 480px;
+}
+
+.sign {
+  padding-top: 40px;
+  color: black;
+  font-weight: lighter;
+  font-size: 23px;
+}
+
+.un {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: lighter;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
+  text-align: center;
+}
+
+form.form1 {
+  padding-top: 40px;
+}
+
+.pass {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: lighter;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
+  text-align: center;
+}
+
+.un:focus,
+.pass:focus {
+  border: 2px solid #ff523b;
+}
+
+@media (max-width: 600px) {
+  .main {
+    border-radius: 0;
+    width: 80%;
+  }
+}

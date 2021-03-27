@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { fetchFavorites } from '../actions';
 import { URL } from '../constants';
 
@@ -14,25 +13,30 @@ const FavoriteComponent = ({
 }) => {
   useEffect(() => {
     fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
-  }, [fetchFavorites]);
+    return () => {
+      fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
+    };
+  }, []);
 
   return (
-    <div className="small-container">
-      <div className="row row-2">
-        <Link to="/new-favorite" className="btn">New Favorite </Link>
-        <h2>Favotites</h2>
-      </div>
-      <div className="row-wrap">
-        {favoriteData.loading && <h2 className="info">Loading</h2>}
-        {favoriteData.error && <h2 className="info">{favoriteData.error}</h2>}
-        {
-          favoriteData && favoriteData.favorites && favoriteData.favorites.length
-            ? favoriteData.favorites.map(favorite => <Favorite key={favorite.id} favorite={favorite} />) : (
-              <h2 className="info">No Favorites.</h2>
-            )
-        }
-      </div>
-    </div>
+    <main>
+      {favoriteData.loading && <h2 className="info">Loading</h2>}
+      {favoriteData.error && <h2 className="info">{favoriteData.error}</h2>}
+      <table className="styled-table">
+        <tbody>
+          {
+              favoriteData && favoriteData.favorites && favoriteData.favorites.length
+                ? favoriteData.favorites.map(favorite => <Favorite key={favorite.id} favorite={favorite} />) : (
+                  <tr>
+                    <td>
+                      No Favorites.
+                    </td>
+                  </tr>
+                )
+            }
+        </tbody>
+      </table>
+    </main>
   );
 };
 

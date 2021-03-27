@@ -18,6 +18,14 @@ export const getProductByCategory = (store, filterCategory) => {
   }
 };
 
+export const getProductByCatId = (store, catId) => {
+  const allProducts = getProductList(store);
+  return {
+    ...allProducts,
+    products: allProducts.products.filter(product => product.category_id === parseInt(catId, 10)),
+  };
+};
+
 export const getProductById = (productList, id) => {
   const { products } = productList;
   return products.filter(product => product.id === parseInt(id, 10))[0];

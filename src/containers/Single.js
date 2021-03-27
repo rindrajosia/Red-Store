@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProductById, getProductList } from '../redux/selectors';
+import { getProductById, getProductList, getUserInfo } from '../redux/selectors';
 
-const Product = ({ match, productData }) => {
+const Product = ({ match, productData, userData }) => {
   const { id } = match.params;
   const details = getProductById(productData, id);
   return (
@@ -24,10 +24,38 @@ const Product = ({ match, productData }) => {
               <h3>Instructions: </h3>
               <br />
               <p className="instructions">{details.description}</p>
-              <Link to="/" className="btn">Go Back </Link>
-              <Link to={`/add-favorite/${id}`} className="btn">
-                Add to favorite
-              </Link>
+              <ul>
+                <li>
+                  <Link to="/" className="btn-product">Go Back </Link>
+                </li>
+                {
+                  userData.user.auth_token && (
+                  <li>
+                    <Link to={`/add-favorite/${id}`} className="btn-product">
+                      Add to favorite
+                    </Link>
+                  </li>
+                  )
+                }
+                {
+                  userData.user.auth_token && userData.user.user.admin && (
+                    <li>
+                      <Link to={`/product-edit/${id}`} className="btn-product">
+                        Edit
+                      </Link>
+                    </li>
+                  )
+                }
+                {
+                  userData.user.auth_token && userData.user.user.admin && (
+                    <li>
+                      <Link to={`/product-del/${id}`} className="btn-product">
+                        Delete
+                      </Link>
+                    </li>
+                  )
+                }
+              </ul>
             </div>
           </>
         ) : (
@@ -43,13 +71,15 @@ const Product = ({ match, productData }) => {
 };
 
 Product.propTypes = {
+  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   productData: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = state => {
+  const userData = getUserInfo(state);
   const productData = getProductList(state);
-  return { productData };
+  return { userData, productData };
 };
 
 export default connect(
