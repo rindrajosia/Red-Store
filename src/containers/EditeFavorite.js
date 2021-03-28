@@ -4,12 +4,13 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { URL } from '../constants';
 import { updateFavorite } from '../actions';
-import { getUserInfo, getFavoriteById, getFavoriteList } from '../redux/selectors';
+import { getFavoriteById, getFavoriteList } from '../redux/selectors';
 
 const EditeFavorite = ({
-  match, updateFavorite, favoriteData, userData,
+  match, updateFavorite, favoriteData, history,
 }) => {
   const { id } = match.params;
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const details = getFavoriteById(favoriteData, id);
   const [favorite, setFavorite] = useState({ name: details.name, priority: details.priority });
   const [error, setError] = useState('');
@@ -22,8 +23,12 @@ const EditeFavorite = ({
   const handleSubmit = e => {
     e.preventDefault();
     if (favorite.name && favorite.priority) {
-      updateFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token, favorite);
-      setSuccess(prevState => `${prevState} Edit with success`);
+      updateFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.auth_token, favorite).then(() => {
+        setSuccess(prevState => `${prevState} Edit with success`);
+        history.push('/favorite');
+      }).catch(() => {
+        setError(prevState => `${prevState} Error network`);
+      });
     } else {
       setError(prevState => `${prevState} Name should not empty`);
     }
@@ -35,13 +40,10 @@ const EditeFavorite = ({
       {success && (
       <h2>
         {success}
-        {' '}
-        <Redirect to="/favorite" />
       </h2>
       )}
       <div className="row-wrap">
-        {userData.loading && <h2 className="info">Loading</h2>}
-        {!userData.user.auth_token && !userData && <Redirect to="/" /> }
+        {!userData.auth_token && !userData && <Redirect to="/" /> }
       </div>
       <p className="sign" align="center">Edit favorite</p>
       <form className="form1">
@@ -78,15 +80,14 @@ const EditeFavorite = ({
 
 EditeFavorite.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   updateFavorite: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const favoriteData = getFavoriteList(state);
-  return { userData, favoriteData };
+  return { favoriteData };
 };
 
 export default connect(

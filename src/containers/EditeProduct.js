@@ -1,20 +1,21 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { imgCheck } from '../logic/checkImg';
 import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants';
 import { updateProduct } from '../actions';
 import {
-  getUserInfo, getCategoriesList, getProductById, getProductList,
+  getCategoriesList, getProductById, getProductList,
 } from '../redux/selectors';
 
 const EditeProduct = ({
-  match, updateProduct, productData, userData, categoriesData,
+  match, updateProduct, productData, categoriesData, history,
 }) => {
   const { id } = match.params;
   const details = getProductById(productData, id);
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const [success, setSuccess] = useState('');
   const [product, setProduct] = useState({
     title: details.title, description: details.description, category_id: details.category_id, imageurl: details.imageurl,
@@ -30,7 +31,7 @@ const EditeProduct = ({
   };
 
   const handleImageUpload = file => {
-    const data = { ...product };
+    let data = { ...product };
     if (file !== details.imageurl) {
       const formData = new FormData();
       formData.append('file', file);
@@ -43,19 +44,25 @@ const EditeProduct = ({
         .then(response => response.json())
         .then(response => {
           if (response.secure_url !== '') {
-            data.imageurl = response.secure_url;
-            updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
-            setSuccess(prevState => `${prevState} Update with success`);
+            data = { ...data, imageurl: response.secure_url };
+            updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.auth_token, data).then(() => {
+              setSuccess(prevState => `${prevState} Update with success`);
+              history.push('/');
+            }).catch(() => {
+              setError(prevState => `${prevState} Error network`);
+            });
           }
         })
         .catch(err => {
           setError(prevState => `${prevState} ${err}`);
         });
     } else {
-      data.imageurl = product.imageurl;
-      console.log(data);
-      updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
-      setSuccess(prevState => `${prevState} Update with success`);
+      updateProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.auth_token, data).then(() => {
+        setSuccess(prevState => `${prevState} Update with success`);
+        history.push('/');
+      }).catch(() => {
+        setError(prevState => `${prevState} Error network`);
+      });
     }
   };
 
@@ -63,8 +70,6 @@ const EditeProduct = ({
     e.preventDefault();
     if (product.title && product.description && product.category_id && product.imageurl) {
       if (((product.imageurl !== details.imageurl) && !imgCheck(product.imageurl.name)) || product.title.length < 10 || product.description.length < 10) {
-        console.log(product);
-        console.log(details.imageurl);
         setError(prevState => `${prevState}  Not an image or title and desription length < 10 `);
       } else {
         handleImageUpload(product.imageurl);
@@ -78,10 +83,11 @@ const EditeProduct = ({
       {success && (
       <h2>
         {success}
-        {' '}
-        <Redirect to="/products" />
       </h2>
       )}
+      <div className="row-wrap">
+        {!userData.user.admin && <Redirect to="/" /> }
+      </div>
       <div className="center">
         <img src={details.imageurl} className="img-edit" alt="product" />
       </div>
@@ -128,17 +134,16 @@ const EditeProduct = ({
 
 EditeProduct.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   categoriesData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   productData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   updateProduct: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const categoriesData = getCategoriesList(state);
   const productData = getProductList(state);
-  return { userData, categoriesData, productData };
+  return { categoriesData, productData };
 };
 
 export default connect(

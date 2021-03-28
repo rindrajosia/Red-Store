@@ -16,6 +16,9 @@ import {
   FETCH_PRODUCTS_REQUEST,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
+  FETCH_PRODUCT_REQUEST,
+  FETCH_PRODUCT_SUCCESS,
+  FETCH_PRODUCT_FAILURE,
   CREATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_FAILURE,
@@ -126,6 +129,20 @@ export const fetchProductsSuccess = products => ({
 
 export const fetchProductsFailure = error => ({
   type: FETCH_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const fetchProductRequest = () => ({
+  type: FETCH_PRODUCT_REQUEST,
+});
+
+export const fetchProductSuccess = product => ({
+  type: FETCH_PRODUCT_SUCCESS,
+  payload: product,
+});
+
+export const fetchProductFailure = error => ({
+  type: FETCH_PRODUCT_FAILURE,
   payload: error,
 });
 
@@ -283,6 +300,7 @@ export const createUser = (url, data) => dispatch => {
   })
     .then(response => response.json())
     .then(result => {
+      sessionStorage.setItem('user', JSON.stringify(result));
       dispatch(createUserSuccess(result));
     })
     .catch(error => {
@@ -299,6 +317,7 @@ export const fetchUser = (url, data) => dispatch => {
   })
     .then(response => response.json())
     .then(result => {
+      sessionStorage.setItem('user', JSON.stringify(result));
       dispatch(fetchUserSuccess(result));
     })
     .catch(error => {
@@ -331,6 +350,24 @@ export const fetchProducts = url => dispatch => {
       'Content-Type': 'application/json',
     },
   })
+    .then(response => response.json())
+    .then(data => {
+      dispatch(fetchProductsSuccess(data));
+    })
+    .catch(error => {
+      dispatch(fetchProductsFailure(error));
+    });
+};
+
+export const fetchProduct = (id, url) => dispatch => {
+  dispatch(fetchProductRequest);
+  return fetch(`${url}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/vnd.shop.admin+json',
+    },
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Error - 404 not found');
@@ -338,10 +375,10 @@ export const fetchProducts = url => dispatch => {
       return response.json();
     })
     .then(data => {
-      dispatch(fetchProductsSuccess(data));
+      dispatch(fetchProductSuccess(data));
     })
     .catch(error => {
-      dispatch(fetchProductsFailure(error));
+      dispatch(fetchProductFailure(error));
     });
 };
 
@@ -422,12 +459,7 @@ export const fetchFavorites = (url, token) => dispatch => {
       Accept: 'application/vnd.shop.admin+json',
     },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error - 404 not found');
-      }
-      return response.json();
-    })
+    .then(response => response.json())
     .then(response => {
       dispatch(fetchFavoritesSuccess(response));
     })
@@ -513,12 +545,7 @@ export const fetchFavoriteProducts = (url, favoriteId, token) => dispatch => {
       Accept: 'application/vnd.shop.admin+json',
     },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error - 404 not found');
-      }
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
       dispatch(fetchFavoriteProductsSuccess(data));
     })

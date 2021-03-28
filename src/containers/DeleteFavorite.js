@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { URL } from '../constants';
 import { deleteFavorite } from '../actions';
-import { getUserInfo, getFavoriteById, getFavoriteList } from '../redux/selectors';
+import { getFavoriteById, getFavoriteList } from '../redux/selectors';
 
 const DeleteFavorite = ({
-  match, deleteFavorite, favoriteData, userData,
+  match, deleteFavorite, favoriteData, history,
 }) => {
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const { id } = match.params;
   const details = getFavoriteById(favoriteData, id);
   const [error, setError] = useState('');
@@ -19,8 +20,12 @@ const DeleteFavorite = ({
     if (!details.name || !id) {
       setError(prevState => `${prevState}  Favorite with id ${id} not found`);
     } else {
-      deleteFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
-      setSuccess(prevState => `${prevState} Delete with success`);
+      deleteFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.auth_token).then(() => {
+        setSuccess(prevState => `${prevState} Deleted with success`);
+        history.push('/favorite');
+      }).catch(() => {
+        setError(prevState => `${prevState} Network error`);
+      });
     }
   };
 
@@ -30,10 +35,11 @@ const DeleteFavorite = ({
       {success && (
       <h2>
         {success}
-        {' '}
-        <Redirect to="/" />
       </h2>
       )}
+      <div className="row-wrap">
+        {!userData.auth_token && !userData && <Redirect to="/" /> }
+      </div>
       <p className="sign" align="center">Delete favorite</p>
       <form className="form1">
         <input
@@ -65,15 +71,14 @@ const DeleteFavorite = ({
 
 DeleteFavorite.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   deleteFavorite: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const favoriteData = getFavoriteList(state);
-  return { userData, favoriteData };
+  return { favoriteData };
 };
 
 export default connect(

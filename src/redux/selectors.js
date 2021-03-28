@@ -31,6 +31,14 @@ export const getProductById = (productList, id) => {
   return products.filter(product => product.id === parseInt(id, 10))[0];
 };
 
+export const getProductMaxId = productList => {
+  const { products } = getProductList(productList);
+  return products.reduce((a, b) => ((a.id > b.id) ? a : b));
+};
+
+export const getProductByIdState = store => store.productByIdFetch;
+export const getProductBy = store => (getProductByIdState(store) || null);
+
 export const getUserState = store => store.user;
 export const getUserInfo = store => (getUserState(store) || null);
 

@@ -2,17 +2,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import { URL } from '../constants';
 import { deleteProduct } from '../actions';
 import {
-  getUserInfo, getProductById, getProductList,
+  getProductById, getProductList,
 } from '../redux/selectors';
 
 const DeleteProduct = ({
-  match, deleteProduct, productData, userData,
+  match, deleteProduct, productData, history,
 }) => {
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const { id } = match.params;
   const details = getProductById(productData, id);
   const [success, setSuccess] = useState('');
@@ -23,8 +23,12 @@ const DeleteProduct = ({
     if (!details.title || !id) {
       setError(prevState => `${prevState}  Product with id ${id} not found`);
     } else {
-      deleteProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token);
-      setSuccess(prevState => `${prevState} Deleted with success`);
+      deleteProduct(id, `${URL.BASE}${URL.PRODUCTS}`, userData.auth_token).then(() => {
+        setSuccess(prevState => `${prevState} Deleted with success`);
+        history.push('/');
+      }).catch(() => {
+        setError(prevState => `${prevState}  Error network`);
+      });
     }
   };
 
@@ -35,9 +39,11 @@ const DeleteProduct = ({
       <h2>
         {success}
         {' '}
-        <Redirect to="/" />
       </h2>
       )}
+      <div className="row-wrap">
+        {!userData.admin && !userData && <Redirect to="/" /> }
+      </div>
       <div className="center">
         <img src={details.imageurl} className="img-edit" alt="product" />
       </div>
@@ -74,15 +80,14 @@ const DeleteProduct = ({
 
 DeleteProduct.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   productData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   deleteProduct: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const productData = getProductList(state);
-  return { userData, productData };
+  return { productData };
 };
 
 export default connect(

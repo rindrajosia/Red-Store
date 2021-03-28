@@ -13,7 +13,7 @@ const ProductComponent = ({
 }) => {
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
-  }, [fetchProducts]);
+  }, []);
 
   useEffect(() => {
     fetchCategories(`${URL.BASE}${URL.FETCH_CATEGORIES}`);
@@ -94,7 +94,6 @@ const mapStateToProps = state => {
   const productDataTwo = getProductByCatId(state, 2);
   const productDataThree = getProductByCatId(state, 3);
   const categoriesData = getCategoriesList(state);
-  console.log(categoriesData);
   return {
     filterCategory, categoriesData, productDataOne, productDataTwo, productDataThree,
   };

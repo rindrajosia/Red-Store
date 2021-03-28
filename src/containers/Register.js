@@ -7,7 +7,7 @@ import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constan
 import { getUserInfo } from '../redux/selectors';
 import { imgCheck } from '../logic/checkImg';
 
-const Register = ({ userData, createUser }) => {
+const Register = ({ userData, createUser, history }) => {
   const [login, setLogin] = useState({
     name: '', email: '', password: '', admin: '', imageurl: '',
   });
@@ -35,8 +35,12 @@ const Register = ({ userData, createUser }) => {
       .then(response => {
         if (response.secure_url !== '') {
           const data = { ...login, imageurl: response.secure_url };
-          createUser(`${URL.BASE}${URL.CREATE_USER}`, data);
-          setSuccess(prevState => `${prevState} Adding with success`);
+          createUser(`${URL.BASE}${URL.CREATE_USER}`, data).then(() => {
+            setSuccess(prevState => `${prevState} Adding with success`);
+            history.push('/');
+          }).catch(() => {
+            setError(prevState => `${prevState} Error network`);
+          });
         }
       })
       .catch(err => {
@@ -48,7 +52,6 @@ const Register = ({ userData, createUser }) => {
     e.preventDefault();
     if (login.email && login.password && login.name && login.imageurl) {
       if (!imgCheck(login.imageurl.name) || login.name.length > 50 || login.password.length < 4) {
-        console.log('sfsf');
         setError(prevState => `${prevState} Not an image or name > 50 or password < 4`);
       } else {
         handleImageUpload(login.imageurl);
@@ -128,6 +131,7 @@ const Register = ({ userData, createUser }) => {
 Register.propTypes = {
   userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   createUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => {

@@ -6,14 +6,15 @@ import { connect } from 'react-redux';
 import { imgCheck } from '../logic/checkImg';
 import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants';
 import { createProduct } from '../actions';
-import { getUserInfo, getCategoriesList } from '../redux/selectors';
+import { getCategoriesList } from '../redux/selectors';
 
 const AddProduct = ({
-  createProduct, userData, categoriesData,
+  createProduct, categoriesData, history,
 }) => {
   const [product, setProduct] = useState({
     title: '', description: '', category_id: '1', imageurl: '',
   });
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const handleChange = e => {
@@ -38,8 +39,12 @@ const AddProduct = ({
       .then(response => {
         if (response.secure_url !== '') {
           const data = { ...product, imageurl: response.secure_url };
-          createProduct(`${URL.BASE}${URL.PRODUCTS}`, userData.user.auth_token, data);
-          setSuccess(prevState => `${prevState} Adding with success`);
+          createProduct(`${URL.BASE}${URL.PRODUCTS}`, userData.auth_token, data).then(() => {
+            setSuccess(prevState => `${prevState} Adding with success`);
+            history.push('/');
+          }).catch(() => {
+            setError(prevState => `${prevState} Error network`);
+          });
         }
       })
       .catch(err => {
@@ -64,13 +69,10 @@ const AddProduct = ({
       {success && (
       <h2>
         {success}
-        {' '}
-        <Redirect to="/" />
       </h2>
       )}
       <div className="row-wrap">
-        {userData.loading && <h2 className="info">Loading</h2>}
-        {!userData.user.user.admin && <Redirect to="/" /> }
+        {!userData && !userData.user.admin && <Redirect to="/" /> }
       </div>
       <p className="sign" align="center">Add new product</p>
       <form className="form1">
@@ -112,15 +114,14 @@ const AddProduct = ({
 };
 
 AddProduct.propTypes = {
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   categoriesData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   createProduct: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const categoriesData = getCategoriesList(state);
-  return { userData, categoriesData };
+  return { categoriesData };
 };
 
 export default connect(

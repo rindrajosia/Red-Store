@@ -14,6 +14,7 @@ import updateProductReducer from './updateProductReducer';
 import filterCategory from './filterCategory';
 import filterFavorite from './filterFavorite';
 import uploadImageReducer from './uploadImageReducer';
+import productByIdFetchReducer from './productByIdFetchReducer';
 
 export default combineReducers({
   user: userFetchReducer,
@@ -21,6 +22,7 @@ export default combineReducers({
   favoriteFetch: favoriteFetchReducer,
   favoriteProductFetch: favoriteProductFetchReducer,
   productFetch: productFetchReducer,
+  productByIdFetch: productByIdFetchReducer,
   createFavoriteProduct: createFavoriteProductReducer,
   createFavorite: createFavoriteReducer,
   createProduct: createProductReducer,

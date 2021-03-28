@@ -6,16 +6,14 @@ import { fetchFavorites } from '../actions';
 import { URL } from '../constants';
 
 import Favorite from '../components/Favorite';
-import { getUserInfo, getFavoriteList } from '../redux/selectors';
+import { getFavoriteList } from '../redux/selectors';
 
 const FavoriteComponent = ({
-  userData, favoriteData, fetchFavorites,
+  favoriteData, fetchFavorites,
 }) => {
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   useEffect(() => {
-    fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
-    return () => {
-      fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token);
-    };
+    fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.auth_token);
   }, []);
 
   return (
@@ -41,15 +39,13 @@ const FavoriteComponent = ({
 };
 
 FavoriteComponent.propTypes = {
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   favoriteData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchFavorites: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-  const userData = getUserInfo(state);
   const favoriteData = getFavoriteList(state);
-  return { userData, favoriteData };
+  return { favoriteData };
 };
 
 export default connect(

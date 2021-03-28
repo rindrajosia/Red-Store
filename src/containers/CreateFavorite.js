@@ -4,9 +4,11 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { URL } from '../constants';
 import { createFavorite } from '../actions';
-import { getUserInfo } from '../redux/selectors';
 
-const CreateFavorite = ({ createFavorite, userData }) => {
+const CreateFavorite = ({
+  createFavorite, history,
+}) => {
+  const userData = JSON.parse(sessionStorage.getItem('user'));
   const [favorite, setFavorite] = useState({ name: '', priority: '1' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -18,8 +20,12 @@ const CreateFavorite = ({ createFavorite, userData }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (favorite.name && favorite.priority) {
-      createFavorite(`${URL.BASE}${URL.FAVORITES}`, userData.user.auth_token, favorite);
-      setSuccess(prevState => `${prevState} Add with success`);
+      createFavorite(`${URL.BASE}${URL.FAVORITES}`, userData.auth_token, favorite).then(() => {
+        setSuccess(prevState => `${prevState} Add with success`);
+        history.push('/favorite');
+      }).catch(() => {
+        setError(prevState => `${prevState} Network error`);
+      });
     } else {
       setError(prevState => `${prevState} Name should not empty`);
     }
@@ -31,13 +37,10 @@ const CreateFavorite = ({ createFavorite, userData }) => {
       {success && (
       <h2>
         {success}
-        {' '}
-        <Redirect to="/" />
       </h2>
       )}
       <div className="row-wrap">
-        {userData.loading && <h2 className="info">Loading</h2>}
-        {!userData.user.auth_token && !userData && <Redirect to="/" /> }
+        {!userData.auth_token && !userData && <Redirect to="/" /> }
       </div>
       <p className="sign" align="center">Add favorite</p>
       <form className="form1">
@@ -74,16 +77,11 @@ const CreateFavorite = ({ createFavorite, userData }) => {
 };
 
 CreateFavorite.propTypes = {
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   createFavorite: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => {
-  const userData = getUserInfo(state);
-  return { userData };
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   { createFavorite },
 )(CreateFavorite);
