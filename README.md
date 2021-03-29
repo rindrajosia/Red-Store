@@ -8,7 +8,7 @@ Technical mandatory requirements of the project:
 * Postgres is used as database
 
 
-API documentation:
+## API documentation:
 | URL                                                                     | Method | Description                                          |
 |-------------------------------------------------------------------------|--------|------------------------------------------------------|
 | https://fast-everglades-93484.herokuapp.com/auth/login                  | POST   | Authentication                                       |
@@ -38,11 +38,11 @@ API documentation:
 - Ruby v2.7.2
 - Ruby on Rails v5.2.4
 
-##ERD
+## ERD
 ![screenshot](docs/erd_final.png)
 
 
-##Screenshot
+## Screenshot
 ![screenshot](docs/1.png)
 
 ![screenshot](docs/2.png)
