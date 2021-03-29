@@ -6,11 +6,7 @@ Technical mandatory requirements of the project:
 
 * This project has 5 tables
 * Postgres is used as database
-* Endpoints :
 
-1- create / update / delete products (admin actions)
-1- create users (user actions)
-2- create / update / delete favourites (user actions)
 
 API documentation:
 | URL                                                                     | Method | Description                                          |
