@@ -1,5 +1,5 @@
 export const URL = {
-  BASE: 'https://guarded-dusk-18736.herokuapp.com',
+  BASE: 'https://fast-everglades-93484.herokuapp.com',
   CREATE_USER: '/signup',
   FETCH_USER: '/auth/login',
   FETCH_CATEGORIES: '/admin/categories',
