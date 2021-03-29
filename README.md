@@ -2,7 +2,7 @@
 This project is based on a catalogue of products. It's a real-world-like project, built with business specifications.
 
 This webapp has 12 types of pages:
-* Logn page
+* Logn page (for administrator, you can use email: 'rrindrajosia@gmail.com', password: '123456789' and for simple user you can use email: 'marina@gmail.com', password: 'marina')
 * Register page
 * List of products page
 * Create product page
@@ -48,7 +48,7 @@ To get a local copy up and running follow these simple example steps:
 
 $ npm t
 
-## See a live demo [Here](https://recipe-rindra.herokuapp.com/)
+## See a live demo [Here](https://wonderful-franklin-57328e.netlify.app)
 
 ## Show your support
 Give a ⭐️ if you like this project!
