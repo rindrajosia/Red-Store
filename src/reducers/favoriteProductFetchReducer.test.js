@@ -24,8 +24,8 @@ describe('favoriteProductFetchReducer reducer', () => {
 
   it('fetchFavoriteProductsSuccess action should work', () => {
     const state = { ...initialState, loading: true, error: '404 Page not fonud' };
-    const favorites_product = ['Meals'];
-    const actual = reducer(state, fetchFavoriteProductsSuccess(favorites_product));
+    const favoritesProduct = ['Meals'];
+    const actual = reducer(state, fetchFavoriteProductsSuccess(favoritesProduct));
     const expected = {
       ...initialState, loading: false, favorites_products: ['Meals'], error: '',
     };
@@ -34,8 +34,8 @@ describe('favoriteProductFetchReducer reducer', () => {
 
   it('fetchFavoriteProductsSuccess action should not work', () => {
     const state = { ...initialState, loading: true, error: '404 Page not fonud' };
-    const favorites_product = ['Meals'];
-    const actual = reducer(state, fetchFavoriteProductsSuccess(favorites_product));
+    const favoritesProduct = ['Meals'];
+    const actual = reducer(state, fetchFavoriteProductsSuccess(favoritesProduct));
     const expected = {
       ...initialState, loading: false, favorites_products: [''], error: '',
     };
