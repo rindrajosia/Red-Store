@@ -2,7 +2,7 @@
 This project is based on a catalogue of products. It's a real-world-like project, built with business specifications.
 
 This webapp has 12 types of pages:
-* Logn page (for administrator, you can use email: 'rrindrajosia@gmail.com', password: '123456789' and for simple user you can use email: 'marina@gmail.com', password: 'marina')
+* Login page (for administrator, you can use email: 'rrindrajosia@gmail.com', password: '123456789' and for simple user you can use email: 'marina@gmail.com', password: 'marina')
 * Register page
 * List of products page
 * Create product page
