@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :favorites, dependent: :destroy
   validates_presence_of :name, :email, :password_digest, :imageurl
-  validates :name, uniqueness: { case_sensitive: false }, length: { maximum: 50 }
+  validates :name, length: { maximum: 50 }
   validates :email, uniqueness: { case_sensitive: false }
   validates :password_digest, length: { minimum: 4 }
 end

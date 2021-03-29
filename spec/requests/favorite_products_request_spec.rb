@@ -11,7 +11,7 @@ RSpec.describe 'FavoriteProducts' do
   let(:product_id) { product.id }
   let(:headers) { valid_headers }
 
-  describe 'GET /admin/favorites/:favorite_id/favorite_products' do
+  describe 'GET /admin/favorite_products' do
     before { get '/admin/favorite_products', params: {}, headers: headers }
 
     context 'when favorite_products exists' do
@@ -24,28 +24,20 @@ RSpec.describe 'FavoriteProducts' do
     end
   end
 
-  describe 'GET /admin/favorites/:favorite_id/favorite_products/:id' do
-    before { get "/admin/favorites/#{favorite_id}/favorite_products/#{favorite_product_id}", params: {}, headers: headers }
+  describe 'GET /admin/favorite_products/:id' do
+    before { get "/admin/favorite_products/#{favorite_id}", params: {}, headers: headers }
 
     context 'when favorites favorite_products exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
-
-      it 'returns the item' do
-        expect(json['id']).to eq(favorite_product_id)
-      end
     end
 
     context 'when user favorite_products does not exist' do
-      let(:favorite_product_id) { 0 }
+      let(:favorite_id) { 0 }
 
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
-      end
-
-      it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find FavoriteProduct/)
+      it 'returns a an empty braket' do
+        expect(response.body).to eq('[]')
       end
     end
   end
