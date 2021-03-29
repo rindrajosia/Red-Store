@@ -60,6 +60,8 @@ const AddProduct = ({
       } else {
         handleImageUpload(product.imageurl);
       }
+    } else {
+      setError(prevState => `${prevState} Not an image or title and desription length < 10 `);
     }
   };
 

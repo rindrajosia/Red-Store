@@ -315,7 +315,12 @@ export const fetchUser = (url, data) => dispatch => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
     .then(result => {
       sessionStorage.setItem('user', JSON.stringify(result));
       dispatch(fetchUserSuccess(result));
@@ -350,7 +355,12 @@ export const fetchProducts = url => dispatch => {
       'Content-Type': 'application/json',
     },
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
     .then(data => {
       dispatch(fetchProductsSuccess(data));
     })
@@ -459,7 +469,12 @@ export const fetchFavorites = (url, token) => dispatch => {
       Accept: 'application/vnd.shop.admin+json',
     },
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
     .then(response => {
       dispatch(fetchFavoritesSuccess(response));
     })
@@ -545,7 +560,12 @@ export const fetchFavoriteProducts = (url, favoriteId, token) => dispatch => {
       Accept: 'application/vnd.shop.admin+json',
     },
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error - 404 not found');
+      }
+      return response.json();
+    })
     .then(data => {
       dispatch(fetchFavoriteProductsSuccess(data));
     })

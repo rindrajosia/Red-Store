@@ -27,7 +27,7 @@ const CreateFavorite = ({
         setError(prevState => `${prevState} Network error`);
       });
     } else {
-      setError(prevState => `${prevState} Name should not empty`);
+      setError(prevState => `${prevState} Favorite should not empty`);
     }
   };
 
