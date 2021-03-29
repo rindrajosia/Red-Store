@@ -53,7 +53,7 @@ API documentation:
 
 ## Live Demo
 
-https://frozen-lowlands-65547.herokuapp.com/
+https://wonderful-franklin-57328e.netlify.app
 
 ## Getting Started
 
