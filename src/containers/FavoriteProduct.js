@@ -15,7 +15,7 @@ const FavoriteProductComponent = ({
   const userData = JSON.parse(sessionStorage.getItem('user'));
   useEffect(() => {
     fetchFavoriteProducts(`${URL.BASE}${URL.FAVORITE_PRODUCTS}`, id, userData.auth_token);
-  }, []);
+  }, [fetchFavoriteProducts]);
 
   return (
     <div className="small-container">

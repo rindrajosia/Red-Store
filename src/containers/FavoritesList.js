@@ -14,7 +14,7 @@ const FavoriteComponent = ({
   const userData = JSON.parse(sessionStorage.getItem('user'));
   useEffect(() => {
     fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.auth_token);
-  }, []);
+  }, [fetchFavorites]);
 
   return (
     <main>

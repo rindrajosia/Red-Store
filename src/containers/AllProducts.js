@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../actions';
@@ -11,10 +11,8 @@ import ProductArray from '../components/ProductArray';
 const AllProducts = ({
   productData, fetchProducts,
 }) => {
-  const mountedRef = useRef(true);
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
-    return () => { mountedRef.current = false; };
   }, [fetchProducts]);
 
   return (

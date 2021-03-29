@@ -13,7 +13,7 @@ const ProductComponent = ({
 }) => {
   useEffect(() => {
     fetchProducts(`${URL.BASE}${URL.PRODUCTS}`);
-  }, []);
+  }, [fetchProducts]);
 
   useEffect(() => {
     fetchCategories(`${URL.BASE}${URL.FETCH_CATEGORIES}`);
