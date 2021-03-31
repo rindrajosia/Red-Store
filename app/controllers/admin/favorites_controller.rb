@@ -29,7 +29,7 @@ module Admin
     end
 
     def set_user_favorite
-      @favorite = Favorite.find_by!(id: params[:id])
+      @favorite = Favorite.find_by!(user_id: current_user.id, product_id: params[:id])
     end
   end
 end

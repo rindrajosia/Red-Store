@@ -18,7 +18,7 @@ Technical mandatory requirements of the project:
 | https://fast-everglades-93484.herokuapp.com/admin/categories/id         | DELETE | Delete a specific favourite                          |
 | https://fast-everglades-93484.herokuapp.com/admin/favorites             | GET    | Show a list of all favourites for a specific user    |
 | https://fast-everglades-93484.herokuapp.com/admin/favorites             | POST   | Create a new favourite                               |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites/id          | DELETE | Delete a specific favourite                          |
+| https://fast-everglades-93484.herokuapp.com/admin/favorites/product_id  | DELETE | Remove one product to a specific favorite            |
 | https://fast-everglades-93484.herokuapp.com/admin/products              | GET    | Show a list of all products                          |
 | https://fast-everglades-93484.herokuapp.com/admin/products/id           | GET    | Show a specific product                              |
 | https://fast-everglades-93484.herokuapp.com/admin/products              | POST   | Create a new product                                 |
