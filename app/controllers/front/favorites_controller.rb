@@ -1,4 +1,4 @@
-module Admin
+module Front
   class FavoritesController < ApplicationController
     before_action :set_user_favorite, only: %i[destroy]
     before_action :set_favorite_product_list, only: %i[index]
