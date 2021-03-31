@@ -6,13 +6,9 @@ Technical mandatory requirements of the project:
 
 * This project has 5 tables
 * Postgres is used as database
-* Endpoints :
 
-1- create / update / delete products (admin actions)
-1- create users (user actions)
-2- create / update / delete favourites (user actions)
 
-API documentation:
+## API documentation:
 | URL                                                                     | Method | Description                                          |
 |-------------------------------------------------------------------------|--------|------------------------------------------------------|
 | https://fast-everglades-93484.herokuapp.com/auth/login                  | POST   | Authentication                                       |
@@ -42,18 +38,18 @@ API documentation:
 - Ruby v2.7.2
 - Ruby on Rails v5.2.4
 
-##ERD
+## ERD
 ![screenshot](docs/erd_final.png)
 
 
-##Screenshot
+## Screenshot
 ![screenshot](docs/1.png)
 
 ![screenshot](docs/2.png)
 
 ## Live Demo
 
-https://frozen-lowlands-65547.herokuapp.com/
+https://wonderful-franklin-57328e.netlify.app
 
 ## Getting Started
 
