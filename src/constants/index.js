@@ -1,5 +1,5 @@
 export const URL = {
-  BASE: 'https://pacific-hamlet-63909.herokuapp.com/',
+  BASE: 'https://pacific-hamlet-63909.herokuapp.com',
   CREATE_USER: '/signup',
   FETCH_USER: '/auth/login',
   FETCH_CATEGORIES: '/admin/categories',
