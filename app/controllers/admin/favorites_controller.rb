@@ -1,24 +1,16 @@
 module Admin
   class FavoritesController < ApplicationController
-    before_action :set_user_favorite, only: %i[show update destroy]
+    before_action :set_user_favorite, only: %i[destroy]
+    before_action :set_favorite_product_list, only: %i[index]
+    before_action :favorite_params_create, only: %i[create]
 
     def index
-      @favorites = current_user.favorites
       json_response(@favorites)
     end
 
-    def show
-      json_response(@favorite)
-    end
-
     def create
-      @favorite_create = current_user.favorites.create!(favorite_params)
+      @favorite_create = Favorite.create!(favorite_params_create)
       json_response(@favorite_create, :created)
-    end
-
-    def update
-      @favorite.update(favorite_params)
-      head :no_content
     end
 
     def destroy
@@ -28,12 +20,16 @@ module Admin
 
     private
 
-    def favorite_params
-      params.permit(:name, :priority)
+    def set_favorite_product_list
+      @favorites = Favorite.list(current_user.id)
+    end
+
+    def favorite_params_create
+      params.permit(:user_id, :product_id)
     end
 
     def set_user_favorite
-      @favorite = current_user.favorites.find_by!(id: params[:id])
+      @favorite = Favorite.find_by!(id: params[:id])
     end
   end
 end
