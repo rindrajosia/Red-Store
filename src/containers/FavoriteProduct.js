@@ -18,8 +18,8 @@ const FavoriteProductComponent = ({
 
   return (
     <div className="small-container">
+      <h2 className="title">{categoriesData.categories[0].name}</h2>
       <div className="row-wrap">
-        <h2>Favorites</h2>
         {
           productData && productData.length
             ? productData.map(product => <Product key={product.id} product={product} />) : (
