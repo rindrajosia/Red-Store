@@ -14,22 +14,16 @@ Technical mandatory requirements of the project:
 | https://fast-everglades-93484.herokuapp.com/auth/login                  | POST   | Authentication                                       |
 | https://fast-everglades-93484.herokuapp.com/signup                      | POST   | Signup                                               |
 | https://fast-everglades-93484.herokuapp.com/admin/categories            | GET    | Show a list of all categories                        |
-| https://fast-everglades-93484.herokuapp.com/admin/categories/:id        | PUT    | Edit a specific category                             |
-| https://fast-everglades-93484.herokuapp.com/admin/categories/:id        | DELETE | Delete a specific category                           |
-| https://fast-everglades-93484.herokuapp.com/admin/favorite_products     | GET    | Show a list of all products in all favourites        |
-| https://fast-everglades-93484.herokuapp.com/admin/favorite_products/:id | GET    | Show a list of all products in a specific favourites |
-| https://fast-everglades-93484.herokuapp.com/admin/favorite_products     | POST   | Adding one product to one favourite                  |
-| https://fast-everglades-93484.herokuapp.com/admin/favorite_products/:id | DELETE | Delete a specific favourite                          |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites             | GET    | Show a list of all favourites                        |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites/:id         | GET    | Show a specific favourite                            |
+| https://fast-everglades-93484.herokuapp.com/admin/categories/id         | PUT    | Edit a specific category                             |
+| https://fast-everglades-93484.herokuapp.com/admin/categories/id         | DELETE | Delete a specific favourite                          |
+| https://fast-everglades-93484.herokuapp.com/admin/favorites             | GET    | Show a list of all favourites for a specific user    |
 | https://fast-everglades-93484.herokuapp.com/admin/favorites             | POST   | Create a new favourite                               |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites/:id         | PUT    | Edit a specific favourite                            |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites/:id         | DELETE | Delete a specific favourite                          |
+| https://fast-everglades-93484.herokuapp.com/admin/favorites/id          | DELETE | Delete a specific favourite                          |
 | https://fast-everglades-93484.herokuapp.com/admin/products              | GET    | Show a list of all products                          |
-| https://fast-everglades-93484.herokuapp.com/admin/products/:id          | GET    | Show a specific product                              |
+| https://fast-everglades-93484.herokuapp.com/admin/products/id           | GET    | Show a specific product                              |
 | https://fast-everglades-93484.herokuapp.com/admin/products              | POST   | Create a new product                                 |
-| https://fast-everglades-93484.herokuapp.com/admin/products/:id          | PUT    | Edit a specific product                              |
-| https://fast-everglades-93484.herokuapp.com/admin/products/:id          | DELETE | Delete a specific product                            |
+| https://fast-everglades-93484.herokuapp.com/admin/products/id           | PUT    | Edit a specific product                              |
+| https://fast-everglades-93484.herokuapp.com/admin/products/id           | DELETE | Delete a specific product                            |
 
 
 
