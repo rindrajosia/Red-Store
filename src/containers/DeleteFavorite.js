@@ -22,7 +22,7 @@ const DeleteFavorite = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!details.product.description || !id) {
+    if (!details.product.title || !id) {
       setError(prevState => `${prevState}  Favorite with id ${id} not found`);
     } else {
       deleteFavorite(id, `${URL.BASE}${URL.FAVORITES}`, userData.auth_token).then(() => {

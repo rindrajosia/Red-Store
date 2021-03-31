@@ -31,7 +31,7 @@ const CreateFavoriteProducts = ({
   };
 
   return (
-    <main className="main-sign">
+    <main className="main-fav">
       {error && <h2>{error}</h2>}
       {success && (
       <h2>

@@ -1,7 +1,8 @@
 .main,
 .main-sign,
 .main-edit,
-.main-del {
+.main-del,
+.main-fav {
   background-color: rgba(243, 241, 239, 1);
   width: 400px;
   margin: 7em auto;
@@ -11,6 +12,10 @@
 
 .main {
   height: 600px;
+}
+
+.main-fav {
+  height: 160px;
 }
 
 .main-sign {
