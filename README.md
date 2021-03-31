@@ -43,7 +43,7 @@ Technical mandatory requirements of the project:
 
 ## Live Demo
 
-https://wonderful-franklin-57328e.netlify.app
+https://sleepy-poincare-183dc4.netlify.app/
 
 ## Getting Started
 
