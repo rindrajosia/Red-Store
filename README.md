@@ -11,19 +11,19 @@ Technical mandatory requirements of the project:
 ## API documentation:
 | URL                                                                     | Method | Description                                          |
 |-------------------------------------------------------------------------|--------|------------------------------------------------------|
-| https://fast-everglades-93484.herokuapp.com/auth/login                  | POST   | Authentication                                       |
-| https://fast-everglades-93484.herokuapp.com/signup                      | POST   | Signup                                               |
-| https://fast-everglades-93484.herokuapp.com/admin/categories            | GET    | Show a list of all categories                        |
-| https://fast-everglades-93484.herokuapp.com/admin/categories/id         | PUT    | Edit a specific category                             |
-| https://fast-everglades-93484.herokuapp.com/admin/categories/id         | DELETE | Delete a specific favourite                          |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites             | GET    | Show a list of all favourites for a specific user    |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites             | POST   | Create a new favourite                               |
-| https://fast-everglades-93484.herokuapp.com/admin/favorites/product_id  | DELETE | Remove one product to a specific favorite            |
-| https://fast-everglades-93484.herokuapp.com/admin/products              | GET    | Show a list of all products                          |
-| https://fast-everglades-93484.herokuapp.com/admin/products/id           | GET    | Show a specific product                              |
-| https://fast-everglades-93484.herokuapp.com/admin/products              | POST   | Create a new product                                 |
-| https://fast-everglades-93484.herokuapp.com/admin/products/id           | PUT    | Edit a specific product                              |
-| https://fast-everglades-93484.herokuapp.com/admin/products/id           | DELETE | Delete a specific product                            |
+| https://pacific-hamlet-63909.herokuapp.com/auth/login                   | POST   | Authentication                                       |
+| https://pacific-hamlet-63909.herokuapp.com/signup                       | POST   | Signup                                               |
+| https://pacific-hamlet-63909.herokuapp.com/admin/categories             | GET    | Show a list of all categories                        |
+| https://pacific-hamlet-63909.herokuapp.com/admin/categories/id          | PUT    | Edit a specific category                             |
+| https://pacific-hamlet-63909.herokuapp.com/admin/categories/id          | DELETE | Delete a specific favourite                          |
+| https://pacific-hamlet-63909.herokuapp.com/admin/favorites              | GET    | Show a list of all favourites for a specific user    |
+| https://pacific-hamlet-63909.herokuapp.com/admin/favorites              | POST   | Create a new favourite                               |
+| https://pacific-hamlet-63909.herokuapp.com/admin/favorites/product_id   | DELETE | Remove one product to a specific favorite            |
+| https://pacific-hamlet-63909.herokuapp.com/admin/products               | GET    | Show a list of all products                          |
+| https://pacific-hamlet-63909.herokuapp.com/admin/products/id            | GET    | Show a specific product                              |
+| https://pacific-hamlet-63909.herokuapp.com/admin/products               | POST   | Create a new product                                 |
+| https://pacific-hamlet-63909.herokuapp.com/admin/products/id            | PUT    | Edit a specific product                              |
+| https://pacific-hamlet-63909.herokuapp.com/admin/products/id            | DELETE | Delete a specific product                            |
 
 
 
