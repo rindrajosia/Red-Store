@@ -49,10 +49,11 @@ RSpec.describe 'Favorites', type: :request do
     end
   end
 
-  describe 'DELETE /admin/favorites/:id' do
-    before { delete "/admin/favorites/#{favorite_id}", params: {}, headers: headers }
+  describe 'DELETE /admin/favorites/:product_id' do
+    before { delete "/admin/favorites/#{product_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
+      puts product_id
       expect(response).to have_http_status(204)
     end
   end
