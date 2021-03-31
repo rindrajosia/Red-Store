@@ -111,8 +111,7 @@ const Header = ({ userData }) => {
           <div className="menu-container hide-md">
             <div className="avatar">
               <img className="img-avatar" src={userData.user.user.imageurl} alt="" />
-              <p className="name">Josia</p>
-              <span className="name-span">@josia</span>
+              <p className="name">{userData.user.user.name}</p>
             </div>
 
             <nav className="menu-nav">
