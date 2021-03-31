@@ -10,10 +10,7 @@ import Register from '../containers/Register';
 import AddProduct from '../containers/AddProduct';
 import EditeProduct from '../containers/EditeProduct';
 import DeleteProduct from '../containers/DeleteProduct';
-import CreateFavorite from '../containers/CreateFavorite';
-import EditeFavorite from '../containers/EditeFavorite';
 import DeleteFavorite from '../containers/DeleteFavorite';
-import FavoritesList from '../containers/FavoritesList';
 import CreateFavoriteProducts from '../containers/CreateFavoriteProducts';
 import FavoriteProduct from '../containers/FavoriteProduct';
 
@@ -31,12 +28,9 @@ export default function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/new-product" component={AddProduct} />
-          <Route path="/new-favorite" component={CreateFavorite} />
-          <Route path="/favorite" component={FavoritesList} />
-          <Route path="/favorite-edit/:id" component={EditeFavorite} />
           <Route path="/favorite-del/:id" component={DeleteFavorite} />
           <Route path="/add-favorite/:id" component={CreateFavoriteProducts} />
-          <Route path="/favorite-product/:id" component={FavoriteProduct} />
+          <Route path="/favorite-product" component={FavoriteProduct} />
         </Switch>
         <Footer />
       </section>

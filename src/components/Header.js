@@ -75,8 +75,7 @@ const Header = ({ userData }) => {
                     {
                       userData.user.user.admin && <li><Link to="/products" className="text-white" onClick={handleClickList}>Products</Link></li>
                     }
-                    <li><Link to="/new-favorite" className="text-white" onClick={handleClickList}>New Favorite</Link></li>
-                    <li><Link to="/favorite" className="text-white" onClick={handleClickList}>Favotite</Link></li>
+                    <li><Link to="/favorite-product" className="text-white" onClick={handleClickList}>Favorite</Link></li>
                     <li><Link to="/" className="text-white" onClick={logout}>Logout</Link></li>
                   </ul>
                 </nav>
@@ -124,8 +123,7 @@ const Header = ({ userData }) => {
                 {
                   userData.user.user.admin && <li><Link to="/products" onClick={handleClickList}>Products</Link></li>
                 }
-                <li><Link to="/new-favorite" onClick={handleClickList}>New Favorite</Link></li>
-                <li><Link to="/favorite" onClick={handleClickList}>Favotite</Link></li>
+                <li><Link to="/favorite-product" onClick={handleClickList}>Favotite</Link></li>
               </ul>
             </nav>
 

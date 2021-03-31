@@ -1,11 +1,10 @@
 export const URL = {
-  BASE: 'https://fast-everglades-93484.herokuapp.com',
+  BASE: 'http://127.0.0.1:3000',
   CREATE_USER: '/signup',
   FETCH_USER: '/auth/login',
   FETCH_CATEGORIES: '/admin/categories',
   PRODUCTS: '/admin/products',
   FAVORITES: '/admin/favorites',
-  FAVORITE_PRODUCTS: '/admin/favorite_products',
 };
 
 export const CATEGORY_FILTERS = {

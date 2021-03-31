@@ -34,18 +34,9 @@ import {
   CREATE_FAVORITE_REQUEST,
   CREATE_FAVORITE_SUCCESS,
   CREATE_FAVORITE_FAILURE,
-  UPDATE_FAVORITE_REQUEST,
-  UPDATE_FAVORITE_SUCCESS,
-  UPDATE_FAVORITE_FAILURE,
   DELETE_FAVORITE_REQUEST,
   DELETE_FAVORITE_SUCCESS,
   DELETE_FAVORITE_FAILURE,
-  FETCH_FAVORITE_PRODUCTS_REQUEST,
-  FETCH_FAVORITE_PRODUCTS_SUCCESS,
-  FETCH_FAVORITE_PRODUCTS_FAILURE,
-  CREATE_FAVORITE_PRODUCT_REQUEST,
-  CREATE_FAVORITE_PRODUCT_SUCCESS,
-  CREATE_FAVORITE_PRODUCT_FAILURE,
 } from './actionTypes';
 
 export const uploadImageRequest = () => ({
@@ -216,20 +207,6 @@ export const createFavoriteFailure = error => ({
   payload: error,
 });
 
-export const updateFavoriteRequest = () => ({
-  type: UPDATE_FAVORITE_REQUEST,
-});
-
-export const updateFavoriteSuccess = favorites => ({
-  type: UPDATE_FAVORITE_SUCCESS,
-  payload: favorites,
-});
-
-export const updateFavoriteFailure = error => ({
-  type: UPDATE_FAVORITE_FAILURE,
-  payload: error,
-});
-
 export const deleteFavoriteRequest = () => ({
   type: DELETE_FAVORITE_REQUEST,
 });
@@ -241,34 +218,6 @@ export const deleteFavoriteSuccess = favorites => ({
 
 export const deleteFavoriteFailure = error => ({
   type: DELETE_FAVORITE_FAILURE,
-  payload: error,
-});
-
-export const fetchFavoriteProductsRequest = () => ({
-  type: FETCH_FAVORITE_PRODUCTS_REQUEST,
-});
-
-export const fetchFavoriteProductsSuccess = favorites => ({
-  type: FETCH_FAVORITE_PRODUCTS_SUCCESS,
-  payload: favorites,
-});
-
-export const fetchFavoriteProductsFailure = error => ({
-  type: FETCH_FAVORITE_PRODUCTS_FAILURE,
-  payload: error,
-});
-
-export const createFavoriteProductRequest = () => ({
-  type: CREATE_FAVORITE_PRODUCT_REQUEST,
-});
-
-export const createFavoriteProductSuccess = favorites => ({
-  type: CREATE_FAVORITE_PRODUCT_SUCCESS,
-  payload: favorites,
-});
-
-export const createFavoriteProductFailure = error => ({
-  type: CREATE_FAVORITE_PRODUCT_FAILURE,
   payload: error,
 });
 
@@ -503,30 +452,6 @@ export const createFavorite = (url, token, data) => dispatch => {
     });
 };
 
-export const updateFavorite = (id, url, token, data) => dispatch => {
-  dispatch(updateFavoriteRequest);
-  return fetch(`${url}/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
-      Accept: 'application/vnd.shop.admin+json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => response.json())
-    .then(response => {
-      dispatch(updateFavoriteSuccess(response));
-    })
-    .catch(error => {
-      if (Object.keys(error).length !== 0) {
-        dispatch(updateFavoriteFailure(error));
-      } else {
-        dispatch(updateFavoriteSuccess(error));
-      }
-    });
-};
-
 export const deleteFavorite = (id, url, token) => dispatch => {
   dispatch(deleteFavoriteRequest);
   return fetch(`${url}/${id}`, {
@@ -547,49 +472,5 @@ export const deleteFavorite = (id, url, token) => dispatch => {
       } else {
         dispatch(deleteFavoriteSuccess(error));
       }
-    });
-};
-
-export const fetchFavoriteProducts = (url, favoriteId, token) => dispatch => {
-  dispatch(fetchFavoriteProductsRequest);
-  return fetch(`${url}/${favoriteId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
-      Accept: 'application/vnd.shop.admin+json',
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error - 404 not found');
-      }
-      return response.json();
-    })
-    .then(data => {
-      dispatch(fetchFavoriteProductsSuccess(data));
-    })
-    .catch(error => {
-      dispatch(fetchFavoriteProductsFailure(error));
-    });
-};
-
-export const createFavoriteProduct = (url, token, data) => dispatch => {
-  dispatch(createFavoriteProductRequest);
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
-      Accept: 'application/vnd.shop.admin+json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => response.json())
-    .then(response => {
-      dispatch(createFavoriteProductSuccess(response));
-    })
-    .catch(error => {
-      dispatch(createFavoriteProductFailure(error));
     });
 };

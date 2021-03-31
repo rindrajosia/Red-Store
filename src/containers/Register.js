@@ -118,7 +118,7 @@ const Register = ({ userData, createUser, history }) => {
         <input name="imageurl" className="un" onChange={handleChange} type="file" multiple={false} accept="/images/*" />
         <div className="center">
           <button type="submit" className="btn" onClick={handleSubmit}>
-            Login
+            Sign up
           </button>
         </div>
       </form>

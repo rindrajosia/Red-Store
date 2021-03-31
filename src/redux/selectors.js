@@ -45,21 +45,18 @@ export const getUserInfo = store => (getUserState(store) || null);
 export const getImageState = store => store.uploadImage;
 export const getImageInfo = store => (getImageState(store) || null);
 
-export const getFavoritesState = store => store.favoriteFetch;
-export const getFavoriteList = store => (getFavoritesState(store) || null);
-
 export const getFavoriteById = (favoriteList, id) => {
   const { favorites } = favoriteList;
   return favorites.filter(favorite => favorite.id === parseInt(id, 10))[0];
 };
 
-export const getFavoriteProductsState = store => store.favoriteProductFetch;
-export const getFavoriteProductList = store => (getFavoriteProductsState(store) || null);
+export const getFavoritesState = store => store.favoriteFetch;
+export const getFavoriteList = store => (getFavoritesState(store) || null);
 
-export const getFilterFavoriteProduct = store => {
-  const allFavoriteProducts = getFavoriteProductList(store).favorites_products;
+export const getFilterFavorite = store => {
+  const allFavorites = getFavoriteList(store).favorites;
 
-  const productArray = allFavoriteProducts.reduce((acc, current) => {
+  const productArray = allFavorites.reduce((acc, current) => {
     const x = acc.find(item => item.id === current.id);
     if (!x) {
       return acc.concat([current]);
@@ -67,6 +64,19 @@ export const getFilterFavoriteProduct = store => {
     return acc;
   }, []);
   return productArray;
+};
+
+export const getFindProdInFavorite = (allFavorites, productId) => {
+  const productArray = allFavorites.reduce((acc, current) => {
+    const x = acc.find(item => item.id === current.id);
+    if (!x) {
+      return acc.concat([current]);
+    }
+    return acc;
+  }, []);
+
+  const flag = productArray.find(product => product.id === parseInt(productId, 10));
+  return flag;
 };
 
 /* eslint-enable max-len */

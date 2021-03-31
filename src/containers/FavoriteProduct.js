@@ -2,28 +2,28 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchFavoriteProducts } from '../actions';
+import { fetchFavorites } from '../actions';
 import { URL } from '../constants';
 
-import { getFilterFavoriteProduct } from '../redux/selectors';
+import { getFilterFavorite } from '../redux/selectors';
 import Product from '../components/Product';
 
 const FavoriteProductComponent = ({
-  match, productData, fetchFavoriteProducts,
+  productData, fetchFavorites,
 }) => {
-  const { id } = match.params;
   const userData = JSON.parse(sessionStorage.getItem('user'));
   useEffect(() => {
-    fetchFavoriteProducts(`${URL.BASE}${URL.FAVORITE_PRODUCTS}`, id, userData.auth_token);
-  }, [fetchFavoriteProducts]);
+    fetchFavorites(`${URL.BASE}${URL.FAVORITES}`, userData.auth_token);
+  }, [fetchFavorites]);
 
   return (
     <div className="small-container">
       <div className="row-wrap">
+        <h2>Favorites</h2>
         {
           productData && productData.length
             ? productData.map(product => <Product key={product.id} product={product} />) : (
-              <h2 className="info">No Products for this Favorite.</h2>
+              <h2 className="info">Favorite empty</h2>
             )
         }
       </div>
@@ -32,19 +32,18 @@ const FavoriteProductComponent = ({
 };
 
 FavoriteProductComponent.propTypes = {
-  match: PropTypes.oneOfType([PropTypes.object]).isRequired,
   productData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchFavoriteProducts: PropTypes.func.isRequired,
+  fetchFavorites: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-  const productData = getFilterFavoriteProduct(state);
+  const productData = getFilterFavorite(state);
   return { productData };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchFavoriteProducts },
+  { fetchFavorites },
 )(FavoriteProductComponent);
 
 /* eslint-enable max-len */

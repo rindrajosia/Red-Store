@@ -7,7 +7,7 @@ const Favorite = ({ favorite }) => {
   return (
     <tr>
       <td>
-        <Link to={`/favorite-product/${id}`}>
+        <Link to="/favorite-product">
           <h4>{name}</h4>
         </Link>
       </td>

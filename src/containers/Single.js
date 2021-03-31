@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProduct } from '../actions';
-import { getProductBy, getUserInfo } from '../redux/selectors';
+import {
+  getProductBy, getUserInfo, getFindProdInFavorite, getFilterFavorite,
+} from '../redux/selectors';
 import { URL } from '../constants';
 
 const Product = ({
-  match, productData, userData, fetchProduct,
+  match, productData, userData, fetchProduct, favoriteData,
 }) => {
   const { id } = match.params;
+  const flag = getFindProdInFavorite(favoriteData, id);
   useEffect(() => {
     fetchProduct(id, `${URL.BASE}${URL.PRODUCTS}`);
   }, []);
@@ -35,10 +38,19 @@ const Product = ({
                   <Link to="/" className="btn-product">Go Back </Link>
                 </li>
                 {
-                  userData.user.auth_token && (
+                  userData.user.auth_token && !flag && (
                   <li>
                     <Link to={`/add-favorite/${id}`} className="btn-product">
                       Add to favorite
+                    </Link>
+                  </li>
+                  )
+                }
+                {
+                  userData.user.auth_token && flag && (
+                  <li>
+                    <Link to={`/favorite-del/${id}`} className="btn-product">
+                      Remove form Favorite
                     </Link>
                   </li>
                   )
@@ -78,6 +90,7 @@ const Product = ({
 
 Product.propTypes = {
   userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  favoriteData: PropTypes.instanceOf(Object).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   productData: PropTypes.instanceOf(Object).isRequired,
   fetchProduct: PropTypes.func.isRequired,
@@ -86,7 +99,10 @@ Product.propTypes = {
 const mapStateToProps = state => {
   const userData = getUserInfo(state);
   const productData = getProductBy(state);
-  return { userData, productData };
+  const favoriteData = getFilterFavorite(state);
+  return {
+    userData, productData, favoriteData,
+  };
 };
 
 export default connect(
