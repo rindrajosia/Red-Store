@@ -18,7 +18,7 @@ const FavoriteProductComponent = ({
 
   return (
     <div className="small-container">
-      <h2 className="title">{categoriesData.categories[0].name}</h2>
+      <h2 className="title">Favorite</h2>
       <div className="row-wrap">
         {
           productData && productData.length
