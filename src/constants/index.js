@@ -1,5 +1,5 @@
 export const URL = {
-  BASE: 'http://127.0.0.1:3000',
+  BASE: 'https://peaceful-island-13072.herokuapp.com',
   CREATE_USER: '/signup',
   FETCH_USER: '/auth/login',
   FETCH_CATEGORIES: '/admin/categories',
