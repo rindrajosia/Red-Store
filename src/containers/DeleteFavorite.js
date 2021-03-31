@@ -59,7 +59,7 @@ const DeleteFavorite = ({
           type="text"
           id="name"
           name="name"
-          value={details.product.description}
+          value={details.product.title}
           className="un"
           disabled
         />
