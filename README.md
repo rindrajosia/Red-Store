@@ -4,7 +4,7 @@ This project is about Final Capstone Project based on a find your house app. It'
 
 Technical mandatory requirements of the project:
 
-* This project has 5 tables
+* This project has 4 tables
 * Postgres is used as database
 
 
