@@ -43,7 +43,7 @@ Technical mandatory requirements of the project:
 
 ## Live Demo
 
-https://sleepy-poincare-183dc4.netlify.app/
+https://gallant-panini-e2e0cb.netlify.app/
 
 ## Getting Started
 
