@@ -48,7 +48,7 @@ To get a local copy up and running follow these simple example steps:
 
 $ npm t
 
-## See a live demo [Here](https://sleepy-poincare-183dc4.netlify.app/)
+## See a live demo [Here](https://gallant-panini-e2e0cb.netlify.app/)
 
 ## Show your support
 Give a ⭐️ if you like this project!
