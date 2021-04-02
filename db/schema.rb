@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_203437) do
     t.string "email"
     t.boolean "admin", default: false
     t.string "password_digest"
-    t.string "imageurl"
+    t.string "imageurl", default: "https://res.cloudinary.com/rindrajosia/image/upload/v1616802722/xt14bzu6fcir16pf3cxm.png"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
