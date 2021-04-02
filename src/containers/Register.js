@@ -28,6 +28,7 @@ const Register = ({ userData, createUser, history }) => {
       if (!validateEmail(login.email) || login.name.length > 50 || login.password.length < 4) {
         setError('Not a valid email or name > 50 or password < 4');
       } else {
+        setError('');
         setLoading(true);
         createUser(`${URL.BASE}${URL.CREATE_USER}`, login).then(() => {
           history.push('/');

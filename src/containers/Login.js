@@ -22,6 +22,7 @@ const Login = ({ userData, fetchUser, history }) => {
       if (!validateEmail(login.email)) {
         setError('Not a valid email');
       } else {
+        setError('');
         setLoading(true);
         fetchUser(`${URL.BASE}${URL.FETCH_USER}`, login).then(() => {
           history.push('/');
