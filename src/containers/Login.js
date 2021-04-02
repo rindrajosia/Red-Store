@@ -7,7 +7,7 @@ import { getUserInfo } from '../redux/selectors';
 import { validateEmail } from '../logic/checkEmail';
 import imageLoading from '../assets/images/loading.gif';
 
-const Login = ({ userData, fetchUser, history }) => {
+const Login = ({ fetchUser, history }) => {
   const [login, setLogin] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,13 @@ const Login = ({ userData, fetchUser, history }) => {
         setError('');
         setLoading(true);
         fetchUser(`${URL.BASE}${URL.FETCH_USER}`, login).then(() => {
-          history.push('/');
+          const user = JSON.parse(sessionStorage.getItem('user'));
+          if (user.auth_token) {
+            history.push('/');
+          } else {
+            setLoading(false);
+            setError('Wrong email or password');
+          }
         }).catch(() => {
           setLoading(false);
           setError('Wrong email or password');
@@ -40,7 +46,6 @@ const Login = ({ userData, fetchUser, history }) => {
     <main className="main-sign">
       <div className="row-wrap">
         {error && <h5 className="center">{error}</h5>}
-        {!userData.loading && userData.user.message && !userData.user.auth_token && <h2 className="info">E-mail and Password Invalid</h2>}
       </div>
       <p className="sign" align="center">Sign in</p>
       <form className="form1">
@@ -78,7 +83,6 @@ const Login = ({ userData, fetchUser, history }) => {
 };
 
 Login.propTypes = {
-  userData: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchUser: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };

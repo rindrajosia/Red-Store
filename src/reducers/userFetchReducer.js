@@ -15,8 +15,8 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_USER_REQUEST:
     case FETCH_USER_REQUEST:
+    case CREATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
