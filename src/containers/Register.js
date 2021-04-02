@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createUser } from '../actions';
-import { URL, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants';
+import { URL } from '../constants';
 import { getUserInfo } from '../redux/selectors';
-import { imgCheck } from '../logic/checkImg';
+import { validateEmail } from '../logic/checkEmail';
+import imageLoading from '../assets/images/loading.gif';
 
 const Register = ({ userData, createUser, history }) => {
   const [login, setLogin] = useState({
-    name: '', email: '', password: '', admin: '', imageurl: '',
+    name: '', email: '', password: '', admin: '', imageurl: 'https://res.cloudinary.com/rindrajosia/image/upload/v1616802722/xt14bzu6fcir16pf3cxm.png',
   });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
   const handleChange = e => {
     const { name, value } = e.target;
     if (name !== 'imageurl') {
@@ -22,61 +22,30 @@ const Register = ({ userData, createUser, history }) => {
     }
   };
 
-  const handleImageUpload = file => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-    fetch(CLOUDINARY_UPLOAD_URL, {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response.secure_url !== '') {
-          const data = { ...login, imageurl: response.secure_url };
-          createUser(`${URL.BASE}${URL.CREATE_USER}`, data).then(() => {
-            setSuccess(prevState => `${prevState} Adding with success`);
-            history.push('/');
-          }).catch(() => {
-            setError(prevState => `${prevState} Error network`);
-          });
-        }
-      })
-      .catch(err => {
-        setError(prevState => `${prevState} ${err} `);
-      });
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-    if (login.email && login.password && login.name && login.imageurl) {
-      if (!imgCheck(login.imageurl.name) || login.name.length > 50 || login.password.length < 4) {
-        setError(prevState => `${prevState} Not an image or name > 50 or password < 4`);
+    if (login.email && login.password && login.name) {
+      if (!validateEmail(login.email) || login.name.length > 50 || login.password.length < 4) {
+        setError('Not a valid email or name > 50 or password < 4');
       } else {
-        handleImageUpload(login.imageurl);
-        setLogin({
-          name: '', email: '', password: '', admin: '', imageurl: '',
+        setLoading(true);
+        createUser(`${URL.BASE}${URL.CREATE_USER}`, login).then(() => {
+          history.push('/');
+        }).catch(() => {
+          setLoading(false);
+          setError('Error network');
         });
       }
     } else {
-      setError(prevState => `${prevState} Not an image or name > 50 or password < 4`);
+      setError('All fields should not be empty');
     }
   };
   return (
 
-    <main className="main-edit">
+    <main className="main">
       <div className="row-wrap">
         {error && <h5 className="center">{error}</h5>}
-        {userData.loading && <h2 className="info">Loading</h2>}
         {!userData.loading && userData.user.message && !userData.user.auth_token && <h2 className="info">User not created</h2>}
-        {userData.user.auth_token && (
-        <h2>
-          {success}
-          {' '}
-          <Redirect to="/" />
-        </h2>
-        )}
       </div>
       <p className="sign" align="center">Register</p>
       <form className="form1">
@@ -115,11 +84,13 @@ const Register = ({ userData, createUser, history }) => {
             True
           </option>
         </select>
-        <input name="imageurl" className="un" onChange={handleChange} type="file" multiple={false} accept="/images/*" />
         <div className="center">
-          <button type="submit" className="btn" onClick={handleSubmit}>
-            Sign up
-          </button>
+          {!loading && (
+            <button type="submit" className="btn" onClick={handleSubmit}>
+              Sign up
+            </button>
+          )}
+          {loading && <img src={imageLoading} alt="loading" />}
         </div>
       </form>
 

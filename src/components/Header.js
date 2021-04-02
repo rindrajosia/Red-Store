@@ -76,6 +76,7 @@ const Header = ({ userData }) => {
                       userData.user.user.admin && <li><Link to="/products" className="text-white" onClick={handleClickList}>Products</Link></li>
                     }
                     <li><Link to="/favorite-product" className="text-white" onClick={handleClickList}>Favorite</Link></li>
+                    <li className="text-white">{userData.user.user.name}</li>
                     <li><Link to="/" className="text-white" onClick={logout}>Logout</Link></li>
                   </ul>
                 </nav>
