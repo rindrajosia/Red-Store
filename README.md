@@ -66,10 +66,10 @@ Give a ⭐️ if you like this project!
 
 * Github: **[@rindrajosia](https://github.com/rindrajosia)**
 * Twitter: **[@rindrajosia](https://twitter.com/josia_rindra)**
-* Linkedin: **[linkedin](https://www.linkedin.com/in/rindra-josia-99b2111a2/)**
+* Linkedin: **[linkedin](https://www.linkedin.com/in/rindrajosia/)**
 
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check the [issues page]https://github.com/rindrajosia/final/issues).
+Feel free to check the [issues page](https://github.com/rindrajosia/final/issues).
